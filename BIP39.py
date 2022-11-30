@@ -11,15 +11,21 @@ def get_seed_from_words_bip39(words):
 
 	return seed
 
+def get_entropy_from_words_bip39(words):
+	mnemo = Mnemonic(language="English")
+	entropy = mnemo.to_entropy(words).hex()
+
+	return entropy
+
 import random
 
 # example code
 
-words = generate_words_bip39()
-seed = get_seed_from_words_bip39(words)
+# words = generate_words_bip39()
+# seed = get_seed_from_words_bip39(words)
 
-random.seed(seed)
+# random.seed(seed)
 
-print(words)
-print(seed)
-print(random.random())
+# print(words)
+# print(seed)
+# print(random.random())
