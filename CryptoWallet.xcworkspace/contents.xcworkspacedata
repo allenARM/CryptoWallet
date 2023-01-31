@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
+   <Group
+      location = "group:/Users/nimbus/Documents/CSUN/491/CryptoWallet/CryptoWallet/HDWalletKit"
+      name = "HDWalletKit">
+      <FileRef
+         location = "group:Base58Encode.swift">
+      </FileRef>
+      <FileRef
+         location = "group:WordList.swift">
+      </FileRef>
+      <FileRef
+         location = "group:HDWalletKitError.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Internal.h">
+      </FileRef>
+      <FileRef
+         location = "group:HDWalletKit.h">
+      </FileRef>
+      <FileRef
+         location = "group:HDPrivateKey.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Network.swift">
+      </FileRef>
+      <FileRef
+         location = "group:HDPublicKey.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Crypto.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Internal.m">
+      </FileRef>
+      <FileRef
+         location = "group:DataConvertable.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Mnemonic.swift">
+      </FileRef>
+      <FileRef
+         location = "group:HDWallet.swift">
+      </FileRef>
+      <Group
+         location = "group:Helper"
+         name = "Helper">
+         <FileRef
+            location = "group:SMP+Extensions.swift">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:Info.plist">
+      </FileRef>
+      <FileRef
+         location = "group:HDWalletKit.modulemap">
+      </FileRef>
+   </Group>
    <FileRef
       location = "group:CryptoWallet.xcodeproj">
    </FileRef>

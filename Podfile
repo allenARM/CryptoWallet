@@ -1,15 +1,12 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '16.1'
+platform :ios, '16.0'
 target 'CryptoWallet' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   
-  pod 'Alamofire'
-  pod 'BitcoinCore.swift'
-  pod 'BitcoinKit.swift'
-  pod 'Bip39.swift'
+#  pod 'BitcoinKit.swift'
 
   post_install do |installer|
     installer.pods_project.build_configurations.each do |config|
