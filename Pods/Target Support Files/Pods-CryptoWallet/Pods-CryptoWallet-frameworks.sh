@@ -178,6 +178,7 @@ code_sign_if_enabled() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Bip39.swift/Bip39.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BitcoinCore.swift/BitcoinCore.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BitcoinKit.swift/BitcoinKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework"
@@ -189,10 +190,12 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Secp256k1Kit.swift/Secp256k1Kit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/UIExtensions.swift/UIExtensions.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/UncommonCrypto/UncommonCrypto.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Bip39.swift/Bip39.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BitcoinCore.swift/BitcoinCore.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BitcoinKit.swift/BitcoinKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework"
@@ -204,6 +207,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Secp256k1Kit.swift/Secp256k1Kit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/UIExtensions.swift/UIExtensions.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/UncommonCrypto/UncommonCrypto.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
