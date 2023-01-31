@@ -6,11 +6,32 @@
 //
 
 import Foundation
-import Bip39
+import BIP39
+import CryptoSwift
+import Base58Swift
+import Crypto
 
 public func getWords() -> [String] {
-    let mnemonic = try! Mnemonic()
+    let mnemonic = Mnemonic().phrase
     
-    let phrase = mnemonic.mnemonic()
-    return phrase
+    return mnemonic
+}
+
+public func getSeed(words: [String]) -> [UInt8] {
+    let seed = Mnemonic().seed
+    
+    return seed
+}
+
+public func getBTCAddress(seed: [UInt8]) -> String {
+    let privateKey = seed.sha512()
+    
+    let publicKey = try! P256.KeyAgreement.PublicKey(rawRepresentation: privateKey)
+
+    let hash = publicKey.rawRepresentation.sha256().sha256()
+    let checksum = hash[0...3]
+    let data = Data([0x00] + publicKey.rawRepresentation.sha256().sha256()[0...19]) + checksum
+    let address = Base58.encode(data)
+    
+    return address
 }

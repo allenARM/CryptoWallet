@@ -16,6 +16,13 @@ class ViewController: UIViewController {
 
     
     @IBAction func testButton(_ sender: Any) {
-        print(getWords())
+        let words = getWords()
+        let seed = getSeed(words: words)
+        let address = getBTCAddress(seed: seed)
+        print(address)
+        
+        checkBalance(address: address) { balance in
+            print("Balance: \(balance ?? 0)")
+        }
     }
 }

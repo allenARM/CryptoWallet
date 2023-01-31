@@ -4,12 +4,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '16.1'
 target 'CryptoWallet' do
   # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
-  
-  pod 'Alamofire'
-  pod 'BitcoinCore.swift'
-  pod 'BitcoinKit.swift'
-  pod 'Bip39.swift'
+  use_frameworks!  
 
   post_install do |installer|
     installer.pods_project.build_configurations.each do |config|
