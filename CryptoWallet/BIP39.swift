@@ -26,7 +26,7 @@ public func getSeed(words: [String]) -> [UInt8] {
 public func getBTCAddress(seed: [UInt8]) -> String {
     let privateKey = seed.sha512()
     
-    let publicKey = try! P256.KeyAgreement.PublicKey(rawRepresentation: privateKey)
+    let publicKey = try! P256.KeyAgreement.PublicKey(rawRepresentation: privateKey.sha512())
 
     let hash = publicKey.rawRepresentation.sha256().sha256()
     let checksum = hash[0...3]
