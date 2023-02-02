@@ -19,7 +19,7 @@ public func getWords() -> [String] {
 }
 
 public func getSeed(words: [String]) -> [UInt8] {
-    let seed = Mnemonic().seed
+    let seed = try! Mnemonic(phrase: words).seed
     
     return seed
 }
@@ -40,7 +40,7 @@ public func getBTCAddress(seed: [UInt8]) -> String {
     //mainnet byte
     versionedRipemd160Hash.append(0x00)
     //testnet byte
-    //versionedRipemd160Hash.append(0x06)
+//    versionedRipemd160Hash.append(0x6F)
     versionedRipemd160Hash.append(data1)
     
     //4) Perform a double SHA-256 hash on the result of step 3.
