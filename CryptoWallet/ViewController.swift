@@ -25,6 +25,7 @@ class ViewController: UIViewController {
         checkBalance(address: address) { balance in
             print("Balance: \(balance ?? 0)")
         }
+        getLatestTransactionHashForAddress(address: address)
     }
     
     
