@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WalletCore
 
 class ViewController: UIViewController {
     
@@ -18,16 +19,34 @@ class ViewController: UIViewController {
     @IBAction func testButton(_ sender: Any) {
         let words = getWords()
         print(words)
-        let seed = getSeed(words: words)
-        let address = getBTCAddress(seed: seed)
-        print(address)
+        let hdwallet = getWallet(words: words)
+        
+        let btcAddress = hdwallet.getAddressForCoin(coin: .bitcoin)
+        print("BTC: " + btcAddress)
+        let ethAddress = hdwallet.getAddressForCoin(coin: .ethereum)
+        print("ETH: " + ethAddress)
+        let solAddress = hdwallet.getAddressForCoin(coin: .solana)
+        print("SOL: " + solAddress)
 
-        checkBalance(address: address) { balance in
-            print("Balance: \(balance ?? 0)")
+        checkBTCBalance(address: btcAddress) { balance in
+            print("BTC Balance: \(balance ?? 0)")
         }
-        getLatestTransactionHashForAddress(address: address)
+        
+//        getLatestTransactionHashForBTCAddress(address: btcAddress) {txid, index in
+//            print("TXID: \(txid)")
+//            print("Address: \(index)")
+//        }
+        
+        getLatestTransactionHashForBTCAddress(address: "muGuqWmcHpjmB2rBpdbTnCwD18wnrWCjBB") {
+            txid, index in
+            print("TXID: \(txid)")
+            print("Address: \(index)")
+        }
+        
+//        checkBalance(address: solAddress) { balance in
+//            print("SOL Balance: \(balance ?? 0)")
+//        }
     }
-    
     
     //SECOND STORYBOARD
     @IBAction func LoginButton(_ sender: Any) {
@@ -46,26 +65,26 @@ class ViewController: UIViewController {
     @IBOutlet var TextField12Words: [UITextField]!
     
     
-    @IBAction func Login(_ sender: Any) {
-//        Check if there are any missing words
-        if (noMissingWords(twelveWords: TextField12Words) == false) {
-            print("INCORRECT WORDS")
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "main")
-            self.present(vc, animated: true)
-            return;
-        }
-        var words: [String] = []
-        for word in TextField12Words {
-            words.append(word.text!)
-        }
-        
-        let seed = getSeed(words: words)
-        let address = getBTCAddress(seed: seed)
-        print(address)
-        
-        checkBalance(address: address) { balance in
-            print("Balance: \(balance ?? 0)")
-        }
-    }
+//    @IBAction func Login(_ sender: Any) {
+////        Check if there are any missing words
+//        if (noMissingWords(twelveWords: TextField12Words) == false) {
+//            print("INCORRECT WORDS")
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let vc = storyboard.instantiateViewController(withIdentifier: "main")
+//            self.present(vc, animated: true)
+//            return;
+//        }
+//        var words: [String] = []
+//        for word in TextField12Words {
+//            words.append(word.text!)
+//        }
+//        
+//        let seed = getSeed(words: words)
+//        let address = getBTCAddress(seed: seed)
+//        print(address)
+//        
+//        checkBalance(address: address) { balance in
+//            print("Balance: \(balance ?? 0)")
+//        }
+//    }
 }
