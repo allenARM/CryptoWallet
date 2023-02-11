@@ -15,8 +15,10 @@
 		D9750E3729821322005C040F /* CryptoWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D9750E3529821322005C040F /* CryptoWallet.xcdatamodeld */; };
 		D9750E3929821323005C040F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9750E3829821323005C040F /* Assets.xcassets */; };
 		D9750E3C29821323005C040F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9750E3A29821323005C040F /* LaunchScreen.storyboard */; };
+		D99C86E229920056007CFEE9 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = D99C86E129920056007CFEE9 /* SwiftProtobuf */; };
+		D99C86E429920056007CFEE9 /* WalletCore in Frameworks */ = {isa = PBXBuildFile; productRef = D99C86E329920056007CFEE9 /* WalletCore */; };
 		D9B58E30298B56EF0029F48D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B58E2F298B56EF0029F48D /* Utils.swift */; };
-		D9C0CFCE2988D497006DD185 /* BitcoinFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C0CFCD2988D497006DD185 /* BitcoinFunctions.swift */; };
+		D9C0CFCE2988D497006DD185 /* CoinFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C0CFCD2988D497006DD185 /* CoinFunctions.swift */; };
 		D9C0CFD12988D4F2006DD185 /* Crypto in Frameworks */ = {isa = PBXBuildFile; productRef = D9C0CFD02988D4F2006DD185 /* Crypto */; };
 		D9C0CFD42988D50F006DD185 /* Base58Swift in Frameworks */ = {isa = PBXBuildFile; productRef = D9C0CFD32988D50F006DD185 /* Base58Swift */; };
 		D9C0CFD72988D530006DD185 /* BIP39 in Frameworks */ = {isa = PBXBuildFile; productRef = D9C0CFD62988D530006DD185 /* BIP39 */; };
@@ -51,7 +53,7 @@
 		D9750E3B29821323005C040F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D9750E3D29821323005C040F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9B58E2F298B56EF0029F48D /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		D9C0CFCD2988D497006DD185 /* BitcoinFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinFunctions.swift; sourceTree = "<group>"; };
+		D9C0CFCD2988D497006DD185 /* CoinFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinFunctions.swift; sourceTree = "<group>"; };
 		D9F86B9929821DAD007559BF /* BIP39.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BIP39.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,6 +67,8 @@
 				D9C0CFD42988D50F006DD185 /* Base58Swift in Frameworks */,
 				D9C0CFDA2988D54A006DD185 /* CryptoSwift in Frameworks */,
 				D9C0CFD12988D4F2006DD185 /* Crypto in Frameworks */,
+				D99C86E429920056007CFEE9 /* WalletCore in Frameworks */,
+				D99C86E229920056007CFEE9 /* SwiftProtobuf in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,7 +122,7 @@
 				D9750E3D29821323005C040F /* Info.plist */,
 				D9750E3529821322005C040F /* CryptoWallet.xcdatamodeld */,
 				D9F86B9929821DAD007559BF /* BIP39.swift */,
-				D9C0CFCD2988D497006DD185 /* BitcoinFunctions.swift */,
+				D9C0CFCD2988D497006DD185 /* CoinFunctions.swift */,
 				D9B58E2F298B56EF0029F48D /* Utils.swift */,
 			);
 			path = CryptoWallet;
@@ -147,6 +151,8 @@
 				D9C0CFD32988D50F006DD185 /* Base58Swift */,
 				D9C0CFD62988D530006DD185 /* BIP39 */,
 				D9C0CFD92988D54A006DD185 /* CryptoSwift */,
+				D99C86E129920056007CFEE9 /* SwiftProtobuf */,
+				D99C86E329920056007CFEE9 /* WalletCore */,
 			);
 			productName = CryptoWallet;
 			productReference = D9750E2929821322005C040F /* CryptoWallet.app */;
@@ -184,6 +190,7 @@
 				D9C0CFD22988D50F006DD185 /* XCRemoteSwiftPackageReference "Base58Swift" */,
 				D9C0CFD52988D530006DD185 /* XCRemoteSwiftPackageReference "BIP39" */,
 				D9C0CFD82988D54A006DD185 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
+				D99C86E029920056007CFEE9 /* XCRemoteSwiftPackageReference "wallet-core" */,
 			);
 			productRefGroup = D9750E2A29821322005C040F /* Products */;
 			projectDirPath = "";
@@ -242,7 +249,7 @@
 				D9750E2F29821322005C040F /* SceneDelegate.swift in Sources */,
 				D9B58E30298B56EF0029F48D /* Utils.swift in Sources */,
 				D9750E3729821322005C040F /* CryptoWallet.xcdatamodeld in Sources */,
-				D9C0CFCE2988D497006DD185 /* BitcoinFunctions.swift in Sources */,
+				D9C0CFCE2988D497006DD185 /* CoinFunctions.swift in Sources */,
 				D9F86B9A29821DAD007559BF /* BIP39.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,6 +476,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D99C86E029920056007CFEE9 /* XCRemoteSwiftPackageReference "wallet-core" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/trustwallet/wallet-core";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		D9C0CFCF2988D4F2006DD185 /* XCRemoteSwiftPackageReference "swift-crypto" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-crypto.git";
@@ -504,6 +519,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D99C86E129920056007CFEE9 /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D99C86E029920056007CFEE9 /* XCRemoteSwiftPackageReference "wallet-core" */;
+			productName = SwiftProtobuf;
+		};
+		D99C86E329920056007CFEE9 /* WalletCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D99C86E029920056007CFEE9 /* XCRemoteSwiftPackageReference "wallet-core" */;
+			productName = WalletCore;
+		};
 		D9C0CFD02988D4F2006DD185 /* Crypto */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D9C0CFCF2988D4F2006DD185 /* XCRemoteSwiftPackageReference "swift-crypto" */;
