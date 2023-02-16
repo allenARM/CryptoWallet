@@ -23,11 +23,10 @@ class ViewController: UIViewController {
         
         let btcAddress = hdwallet.getAddressForCoin(coin: .bitcoin)
         print("BTC: " + btcAddress)
-        print(hdwallet.getKeyForCoin(coin: .bitcoin).data.hexString)
         let ethAddress = hdwallet.getAddressForCoin(coin: .ethereum)
-//        print("ETH: " + ethAddress)
+        print("ETH: " + ethAddress)
         let solAddress = hdwallet.getAddressForCoin(coin: .solana)
-//        print("SOL: " + solAddress)
+        print("SOL: " + solAddress)
 
         checkBTCBalance(address: btcAddress) { balance in
             print("BTC Balance: \(balance ?? 0)")
@@ -36,7 +35,7 @@ class ViewController: UIViewController {
         getLatestTransactionHashForBTCAddress(address: "muGuqWmcHpjmB2rBpdbTnCwD18wnrWCjBB") {
             txid, index, value in
             print("TXID: \(txid)")
-            print("Address: \(index)")
+            print("ID: \(index)")
             print("Value: \(value)")
         }
         
@@ -79,11 +78,10 @@ class ViewController: UIViewController {
         let hdwallet = getWallet(words: words)
         let btcAddress = hdwallet.getAddressForCoin(coin: .bitcoin)
         print("BTC: " + btcAddress)
-        print(hdwallet.getKeyForCoin(coin: .bitcoin).data.hexString)
         let ethAddress = hdwallet.getAddressForCoin(coin: .ethereum)
-//        print("ETH: " + ethAddress)
+        print("ETH: " + ethAddress)
         let solAddress = hdwallet.getAddressForCoin(coin: .solana)
-//        print("SOL: " + solAddress)
+        print("SOL: " + solAddress)
         
         checkBTCBalance(address: btcAddress) { balance in
             print("BTC Balance: \(balance ?? 0)")
