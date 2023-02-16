@@ -11,8 +11,8 @@ import CryptoSwift
 import WalletCore
 
 func checkBTCBalance(address: String, completion: @escaping (Double?) -> ()) {
-    let url = URL(string: "https://blockstream.info/api/address/\(address)")!
-//    let url = URL(string: "https://blockstream.info/testnet/api/address/muGuqWmcHpjmB2rBpdbTnCwD18wnrWCjBB")!
+//    let url = URL(string: "https://blockstream.info/api/address/\(address)")!
+    let url = URL(string: "https://blockstream.info/testnet/api/address/muGuqWmcHpjmB2rBpdbTnCwD18wnrWCjBB")!
     
     URLSession.shared.dataTask(with: url) { data, response, error in
         if let data = data {

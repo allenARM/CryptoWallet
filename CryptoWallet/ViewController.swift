@@ -61,26 +61,30 @@ class ViewController: UIViewController {
     @IBOutlet var TextField12Words: [UITextField]!
     
     
-//    @IBAction func Login(_ sender: Any) {
-////        Check if there are any missing words
-//        if (noMissingWords(twelveWords: TextField12Words) == false) {
-//            print("INCORRECT WORDS")
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let vc = storyboard.instantiateViewController(withIdentifier: "main")
-//            self.present(vc, animated: true)
-//            return;
-//        }
-//        var words: [String] = []
-//        for word in TextField12Words {
-//            words.append(word.text!)
-//        }
-//        
-//        let seed = getSeed(words: words)
-//        let address = getBTCAddress(seed: seed)
-//        print(address)
-//        
-//        checkBalance(address: address) { balance in
-//            print("Balance: \(balance ?? 0)")
-//        }
-//    }
+    @IBAction func Login(_ sender: Any) {
+//        Check if there are any missing words
+        if (noMissingWords(twelveWords: TextField12Words) == false) {
+            print("INCORRECT WORDS")
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "main")
+            self.present(vc, animated: true)
+            return;
+        }
+        var words: [String] = []
+        for word in TextField12Words {
+            words.append(word.text!)
+        }
+        
+        let hdwallet = getWallet(words: words)
+        let btcAddress = hdwallet.getAddressForCoin(coin: .bitcoin)
+        print("BTC: " + btcAddress)
+        let ethAddress = hdwallet.getAddressForCoin(coin: .ethereum)
+        print("ETH: " + ethAddress)
+        let solAddress = hdwallet.getAddressForCoin(coin: .solana)
+        print("SOL: " + solAddress)
+        
+        checkBTCBalance(address: btcAddress) { balance in
+            print("BTC Balance: \(balance ?? 0)")
+        }
+    }
 }
