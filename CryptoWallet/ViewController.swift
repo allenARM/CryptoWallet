@@ -32,7 +32,7 @@ class ViewController: UIViewController {
             print("BTC Balance: \(balance ?? 0)")
         }
         
-        getLatestTransactionHashForBTCAddress(address: "muGuqWmcHpjmB2rBpdbTnCwD18wnrWCjBB") {
+        getLatestTransactionHashForBTCAddress(address: btcAddress) {
             txid, index, value in
             print("TXID: \(txid)")
             print("ID: \(index)")
@@ -85,6 +85,13 @@ class ViewController: UIViewController {
         
         checkBTCBalance(address: btcAddress) { balance in
             print("BTC Balance: \(balance ?? 0)")
+        }
+        
+        getLatestTransactionHashForBTCAddress(address: btcAddress) {
+            txid, index, value in
+            print("TXID: \(txid)")
+            print("ID: \(index)")
+            print("Value: \(value)")
         }
     }
 }

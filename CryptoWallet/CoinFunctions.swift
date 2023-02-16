@@ -9,18 +9,18 @@ import Foundation
 import CryptoSwift
 import WalletCore
 
-func checkBTCBalance(address: String, completion: @escaping (Double?) -> ()) {
-//    let url = URL(string: "https://blockstream.info/api/address/\(address)")!
-    let url = URL(string: "https://blockstream.info/testnet/api/address/muGuqWmcHpjmB2rBpdbTnCwD18wnrWCjBB")!
+public func checkBTCBalance(address: String, completion: @escaping (Double?) -> ()) {
+    let url = URL(string: "https://blockstream.info/api/address/\(address)")!
+//    let url = URL(string: "https://blockstream.info/testnet/api/address/muGuqWmcHpjmB2rBpdbTnCwD18wnrWCjBB")!
     
     URLSession.shared.dataTask(with: url) { data, response, error in
         if let data = data {
             do {
                 if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                     let test = json["chain_stats"] as? [String:Any]
-                    let balance = test?["funded_txo_sum"] as? Double
+                    let balance = (test?["funded_txo_sum"] as! Double) - (test?["spent_txo_sum"] as! Double)
                     if (balance != nil) {
-                        let Finalbalance = balance!/100000000
+                        let Finalbalance = balance/100000000
                         completion(Finalbalance)
                     }
                     else {
@@ -35,10 +35,9 @@ func checkBTCBalance(address: String, completion: @escaping (Double?) -> ()) {
        }.resume()
 }
 
-func getLatestTransactionHashForBTCAddress(address: String, completion: @escaping(String, Int, Int) -> ()) {
-//    let blockstreamInfoApi = URL(string: "https://blockstream.info/api/address/\(address)/txs")!
-    
-    let blockstreamInfoApi = URL(string: "https://blockstream.info/testnet/api/address/muGuqWmcHpjmB2rBpdbTnCwD18wnrWCjBB/txs")!
+public func getLatestTransactionHashForBTCAddress(address: String, completion: @escaping(String, Int, Int) -> ()) {
+    let blockstreamInfoApi = URL(string: "https://blockstream.info/api/address/\(address)/txs")!
+//    let blockstreamInfoApi = URL(string: "https://blockstream.info/testnet/api/address/muGuqWmcHpjmB2rBpdbTnCwD18wnrWCjBB/txs")!
     
     var index = 0
     
