@@ -21,7 +21,8 @@ public func getWords() -> [String] {
 
 public func getWallet(words: [String]) -> HDWallet {
     let togetherWords = words.joined(separator: " ")
-    let hdwallet = HDWallet(strength: 128, passphrase: togetherWords)!
+    
+    let hdwallet = HDWallet(mnemonic: togetherWords, passphrase: "")!
     
     return hdwallet
 }
