@@ -120,9 +120,10 @@ func signEthereumTransaction(hdwallet: HDWallet, amount:String, toAddress:String
     print(" data:   ", output.encoded.hexString)
 }
 
-func signSolanaTransaction(hdwallet: HDWallet, toAddress:String) {
+func signSolanaTransaction(hdwallet: HDWallet, amount:UInt64, toAddress:String) {
     let input = SolanaSigningInput.with {
-//        $0.
+        $0.transferTransaction.recipient = toAddress;
+        $0.transferTransaction.value = amount;
         $0.privateKey = hdwallet.getKeyForCoin(coin: .solana).data
     }
     
