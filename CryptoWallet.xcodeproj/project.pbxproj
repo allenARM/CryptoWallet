@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6632EE9557079C401F2DB6E0 /* Pods_CryptoWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A0CE4179272A3D4D25830E /* Pods_CryptoWallet.framework */; };
 		D9750E2D29821322005C040F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9750E2C29821322005C040F /* AppDelegate.swift */; };
 		D9750E2F29821322005C040F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9750E2E29821322005C040F /* SceneDelegate.swift */; };
 		D9750E3129821322005C040F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9750E3029821322005C040F /* ViewController.swift */; };
@@ -63,7 +62,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9C0CFD72988D530006DD185 /* BIP39 in Frameworks */,
-				6632EE9557079C401F2DB6E0 /* Pods_CryptoWallet.framework in Frameworks */,
 				D9C0CFD42988D50F006DD185 /* Base58Swift in Frameworks */,
 				D9C0CFDA2988D54A006DD185 /* CryptoSwift in Frameworks */,
 				D9C0CFD12988D4F2006DD185 /* Crypto in Frameworks */,
