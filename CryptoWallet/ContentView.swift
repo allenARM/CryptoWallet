@@ -71,7 +71,8 @@ struct ContentView: View {
                 }
             }
             
-            Button("Try ME") { try_ETH() }
+            Button("Try ETH") { try_ETH() }
+            Button("Try SOL") { try_SOL() }
         }
         func try_ETH(){
             checkETHBalance(for: "0xb28C08e98aA98d94917851C1C99e5F13C3561eb8") { result in
