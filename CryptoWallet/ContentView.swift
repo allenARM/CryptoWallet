@@ -62,7 +62,7 @@ struct ContentView: View {
                     words.append(TextField12Words)
                     TextField12Words = ""
                 }
-            }else{
+            } else{
                 Button("Login")
                 {
                     words.append(TextField12Words)
@@ -70,39 +70,47 @@ struct ContentView: View {
                     addingWords()
                 }
             }
+            
+            Button("Try ME") { try_ETH() }
         }
-            func addingWords()
-            {
-                if (noMissingWords(twelveWords: words) == false) {
-                    print("INCORRECT WORDS")
-                }
-                let hdwallet = getWallet(words: words)
-                let btcAddress = hdwallet.getAddressForCoin(coin: .bitcoin)
-                print("BTC: " + btcAddress)
-                let ethAddress = hdwallet.getAddressForCoin(coin: .ethereum)
-                print("ETH: " + ethAddress)
-                let solAddress = hdwallet.getAddressForCoin(coin: .solana)
-                print("SOL: " + solAddress)
-                
-                checkBTCBalance(address: btcAddress) { balance in
-                    print("BTC Balance: \(balance ?? 0)")
-                }
-                
-                getLatestTransactionHashForBTCAddress(address: btcAddress) {
-                    txid, index, value in
-                    print("TXID: \(txid)")
-                    print("ID: \(index)")
-                    print("Value: \(value)")
+        func try_ETH(){
+            checkETHBalance(for: "0x1234567890abcdef1234567890abcdef12345678") { result in
+                switch result {
+                case .success(let balance):
+                    print("Balance: \(balance) ETH")
+                case .failure(let error):
+                    print("Error: \(error)")
                 }
             }
+        }
+        
+        func addingWords()
+        {
+            if (noMissingWords(twelveWords: words) == false) {
+                print("INCORRECT WORDS")
+            }
+            let hdwallet = getWallet(words: words)
+            let btcAddress = hdwallet.getAddressForCoin(coin: .bitcoin)
+            print("BTC: " + btcAddress)
+            let ethAddress = hdwallet.getAddressForCoin(coin: .ethereum)
+            print("ETH: " + ethAddress)
+            let solAddress = hdwallet.getAddressForCoin(coin: .solana)
+            print("SOL: " + solAddress)
             
-    }
-    
+            checkBTCBalance(address: btcAddress) { balance in
+                print("BTC Balance: \(balance ?? 0)")
+            }
+            
+            getLatestTransactionHashForBTCAddress(address: btcAddress) {
+                txid, index, value in
+                print("TXID: \(txid)")
+                print("ID: \(index)")
+                print("Value: \(value)")
+            }
+        }
+}
     
     struct CreateWalletView: View {
-        
-        
-        
         var body: some View {
             Text("Create Wallet")
         }

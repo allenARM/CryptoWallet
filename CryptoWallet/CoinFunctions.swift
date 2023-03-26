@@ -35,6 +35,56 @@ public func checkBTCBalance(address: String, completion: @escaping (Double?) -> 
        }.resume()
 }
 
+public func checkETHBalance(for address: String, completionHandler: @escaping (Result<Double, Error>) -> Void) {
+    // Replace the following variable with your own Infura project ID
+    let infuraProjectId = "a30677d78d3d45e19fd10d4a79a591c2"
+
+    // Construct the Infura API endpoint URL
+    let urlString = "https://mainnet.infura.io/v3/\(infuraProjectId)"
+    let url = URL(string: urlString)!
+
+    // Construct the JSON-RPC request body
+    let requestBody = """
+    {
+        "jsonrpc": "2.0",
+        "method": "eth_getBalance",
+        "params": ["\(address)", "latest"],
+        "id": 1
+    }
+    """
+
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.httpBody = requestBody.data(using: .utf8)
+
+    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        guard let data = data else {
+            completionHandler(.failure(error ?? URLError(.badServerResponse)))
+            return
+        }
+
+        do {
+            let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            guard let result = jsonObject?["result"] as? String else {
+                completionHandler(.failure(NSError(domain: "JSON parsing error", code: 0, userInfo: nil)))
+                return
+            }
+
+            // Convert the balance from hexadecimal to decimal
+            let balanceInWei = BigInt(result.dropFirst(2), radix: 16)!
+            let balanceInEth = Double(balanceInWei) / pow(10, 18)
+
+            completionHandler(.success(balanceInEth))
+
+        } catch {
+            completionHandler(.failure(error))
+        }
+    }
+
+    task.resume()
+}
+
+
 public func getLatestTransactionHashForBTCAddress(address: String, completion: @escaping(String, Int, Int) -> ()) {
     let blockstreamInfoApi = URL(string: "https://blockstream.info/api/address/\(address)/txs")!
 //    let blockstreamInfoApi = URL(string: "https://blockstream.info/testnet/api/address/muGuqWmcHpjmB2rBpdbTnCwD18wnrWCjBB/txs")!
