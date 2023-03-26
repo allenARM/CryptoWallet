@@ -1,0 +1,59 @@
+{
+  "pins" : [
+    {
+      "identity" : "base58swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SunZhiC/Base58Swift",
+      "state" : {
+        "branch" : "main",
+        "revision" : "cf07b968ddce180f6c4314d6ffa0073f0e60d7f8"
+      }
+    },
+    {
+      "identity" : "bigint",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/attaswift/BigInt.git",
+      "state" : {
+        "revision" : "0ed110f7555c34ff468e72e1686e59721f2b0da6",
+        "version" : "5.3.0"
+      }
+    },
+    {
+      "identity" : "bip39",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pengpengliu/BIP39",
+      "state" : {
+        "branch" : "master",
+        "revision" : "e79bd90275e50643cf8f97208ffa536d0def3ec7"
+      }
+    },
+    {
+      "identity" : "cryptoswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
+      "state" : {
+        "revision" : "95c18f1c1bc44d5547728621ed680850368f7a45",
+        "version" : "1.7.0"
+      }
+    },
+    {
+      "identity" : "swift-crypto",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-crypto.git",
+      "state" : {
+        "revision" : "da0fe44138ab86e380f40a2acbd8a611b07d3f64",
+        "version" : "2.4.0"
+      }
+    },
+    {
+      "identity" : "wallet-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/trustwallet/wallet-core",
+      "state" : {
+        "revision" : "27e0e5746b94e0a52c9e6e16c6e6ea79b8a4c0b7",
+        "version" : "3.1.20"
+      }
+    }
+  ],
+  "version" : 2
+}
