@@ -16,6 +16,10 @@ struct HomeView: View {
             }
             
             Spacer()
+            Text("Ethereum Balance:")
+            Text("Bitcoin Balance:")
+            Text("Solana Balance:")
+            Spacer()
         }
         
     }

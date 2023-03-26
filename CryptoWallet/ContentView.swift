@@ -8,58 +8,46 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var isShowingLoginView = false
-    @State private var isShowingCreateWalletView = false
     
 
     
     var body: some View {
-        VStack {
-            Image(systemName: "person.fill")
-                .resizable()
-                .frame(width: 50, height: 50)
-                .padding()
-            
-            
-            Button(action: loginButtonTapped) {
-                Text("Login to existing wallet")
-                    .font(.headline)
-                    .foregroundColor(.white)
+        NavigationView{
+            VStack {
+                Image(systemName: "person.fill")
+                    .resizable()
+                    .frame(width: 50, height: 50)
                     .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .background(Color.blue)
-                    .cornerRadius(8)
-                    .padding(.horizontal, 25)
+                
+                
+                NavigationLink(destination: LoginView()){
+                    Text("Login to existing wallet")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .background(Color.blue)
+                        .cornerRadius(8)
+                        .padding(.horizontal, 25)
+                }
+                NavigationLink(destination: CreateWalletView()) {
+                    Text("Create a new wallet")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .background(Color.green)
+                        .cornerRadius(8)
+                        .padding(.horizontal, 25)
+                }
             }
-            Button(action: createWalletButtonTapped) {
-                Text("Create a new wallet")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .background(Color.green)
-                    .cornerRadius(8)
-                    .padding(.horizontal, 25)
-            }
-        }
-        .fullScreenCover(isPresented: $isShowingLoginView) {
-            LoginView(isPresented: $isShowingLoginView)
-        }
-        .fullScreenCover(isPresented: $isShowingCreateWalletView) {
-            CreateWalletView(isPresented: $isShowingCreateWalletView)
         }
     }
     
-    func loginButtonTapped() {
-      
-        isShowingLoginView = true
-        
-    }
     
     struct LoginView: View {
         @State private var TextField12Words = ""
         @State private var words: [String] = []
-        @Binding var isPresented: Bool
         
         
         var body: some View {
@@ -110,13 +98,9 @@ struct ContentView: View {
             
     }
     
-    func createWalletButtonTapped() {
-        isShowingCreateWalletView = true
-    }
-    
     
     struct CreateWalletView: View {
-        @Binding var isPresented: Bool
+        
         
         
         var body: some View {
@@ -127,5 +111,11 @@ struct ContentView: View {
             // Implement wallet creation functionality here
             // Then dismiss the view
         }
+    }
+}
+
+struct ContentView_Previews: PreviewProvider{
+    static var previews: some View{
+        ContentView()
     }
 }
