@@ -74,10 +74,21 @@ struct ContentView: View {
             Button("Try ME") { try_ETH() }
         }
         func try_ETH(){
-            checkETHBalance(for: "0x1234567890abcdef1234567890abcdef12345678") { result in
+            checkETHBalance(for: "0xb28C08e98aA98d94917851C1C99e5F13C3561eb8") { result in
                 switch result {
                 case .success(let balance):
                     print("Balance: \(balance) ETH")
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+            }
+        }
+        func try_SOL()
+        {
+            checkSOLBalance(for: "J6vcaEVVLfd6Cf8b8X5J8pr85yWokgDz5TJTrCpsdD4p") { result in
+                switch result {
+                case .success(let balance):
+                    print("Balance: \(balance) SOL")
                 case .failure(let error):
                     print("Error: \(error)")
                 }
