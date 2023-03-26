@@ -85,7 +85,7 @@ public func checkETHBalance(for address: String, completionHandler: @escaping (R
     task.resume()
 }
 
-func checkSOLBalance(for address: String, completionHandler: @escaping (Result<Double, Error>) -> Void) {
+public func checkSOLBalance(for address: String, completionHandler: @escaping (Result<Double, Error>) -> Void) {
     // Replace the following variable with your own Solana RPC endpoint URL
     let rpcEndpointUrl = "https://api.mainnet-beta.solana.com"
 
