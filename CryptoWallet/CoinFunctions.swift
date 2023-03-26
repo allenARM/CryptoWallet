@@ -8,6 +8,7 @@
 import Foundation
 import CryptoSwift
 import WalletCore
+import BigInt
 
 public func checkBTCBalance(address: String, completion: @escaping (Double?) -> ()) {
     let url = URL(string: "https://blockstream.info/api/address/\(address)")!
