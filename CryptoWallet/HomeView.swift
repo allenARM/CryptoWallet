@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WalletCore
 
 struct HomeView: View {
     var body: some View {
@@ -25,8 +26,8 @@ struct HomeView: View {
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
+struct HomeView_Previews: PreviewProvider{
+    static var previews: some View{
         HomeView()
     }
 }

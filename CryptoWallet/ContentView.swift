@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import WalletCore
+
+
+var hdwallet:HDWallet!
 
 struct ContentView: View {
-    
-
     
     var body: some View {
         NavigationView{
@@ -43,37 +45,47 @@ struct ContentView: View {
             }
         }
     }
+
     
     
     struct LoginView: View {
         @State private var TextField12Words = ""
         @State private var words: [String] = []
-        
+        @State private var isShowingHomeView = false
         
         var body: some View {
-            
-            TextField("12 Words", text: $TextField12Words)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .autocapitalization(.none)
-            
-            if(words.count < 11)
-            {
-                Button("Add word") {
-                    words.append(TextField12Words)
-                    TextField12Words = ""
-                }
-            } else{
-                Button("Login")
+            VStack{
+                TextField("12 Words", text: $TextField12Words)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
+                
+                if(words.count < 11)
                 {
-                    words.append(TextField12Words)
-                    TextField12Words = ""
-                    addingWords()
+                    Button("Add word") {
+                        words.append(TextField12Words)
+                        TextField12Words = ""
+                    }
+                } else{
+                    Button("Login")
+                    {
+                        words.append(TextField12Words)
+                        TextField12Words = ""
+                        login()
+                        self.isShowingHomeView = true
+                    }
                 }
+                
+                Button("Try ETH") { try_ETH()
+                }
+                
+                Button("Try SOL") { try_SOL() }
             }
-            
-            Button("Try ETH") { try_ETH() }
-            Button("Try SOL") { try_SOL() }
+            .fullScreenCover(isPresented: $isShowingHomeView){
+                HomeView()
+            }
         }
+            
+        
         func try_ETH(){
             checkETHBalance(for: "0xb28C08e98aA98d94917851C1C99e5F13C3561eb8") { result in
                 switch result {
@@ -95,30 +107,35 @@ struct ContentView: View {
                 }
             }
         }
+            
         
-        func addingWords()
+        func login()
         {
+            
             if (noMissingWords(twelveWords: words) == false) {
                 print("INCORRECT WORDS")
             }
-            let hdwallet = getWallet(words: words)
-            let btcAddress = hdwallet.getAddressForCoin(coin: .bitcoin)
-            print("BTC: " + btcAddress)
-            let ethAddress = hdwallet.getAddressForCoin(coin: .ethereum)
-            print("ETH: " + ethAddress)
-            let solAddress = hdwallet.getAddressForCoin(coin: .solana)
-            print("SOL: " + solAddress)
             
-            checkBTCBalance(address: btcAddress) { balance in
-                print("BTC Balance: \(balance ?? 0)")
-            }
-            
-            getLatestTransactionHashForBTCAddress(address: btcAddress) {
-                txid, index, value in
-                print("TXID: \(txid)")
-                print("ID: \(index)")
-                print("Value: \(value)")
-            }
+            hdwallet = getWallet(words: words)
+            HomeView()
+
+//            let btcAddress = hdwallet.getAddressForCoin(coin: .bitcoin)
+//            print("BTC: " + btcAddress)
+//            let ethAddress = hdwallet.getAddressForCoin(coin: .ethereum)
+//            print("ETH: " + ethAddress)
+//            let solAddress = hdwallet.getAddressForCoin(coin: .solana)
+//            print("SOL: " + solAddress)
+//
+//            checkBTCBalance(address: btcAddress) { balance in
+//                print("BTC Balance: \(balance ?? 0)")
+//            }
+//
+//            getLatestTransactionHashForBTCAddress(address: btcAddress) {
+//                txid, index, value in
+//                print("TXID: \(txid)")
+//                print("ID: \(index)")
+//                print("Value: \(value)")
+//            }
         }
 }
     
