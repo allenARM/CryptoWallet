@@ -86,55 +86,58 @@ public func checkETHBalance(for address: String, completionHandler: @escaping (R
 }
 
 public func checkSOLBalance(for address: String, completionHandler: @escaping (Result<Double, Error>) -> Void) {
-    // Replace the following variable with your own Solana RPC endpoint URL
-    let rpcEndpointUrl = "https://api.mainnet-beta.solana.com"
+    let url = URL(string: "https://api.mainnet-beta.solana.com")!
 
-    // Construct the JSON-RPC request body
-    let requestBody = """
-    {
+    let rpcRequest = [
         "jsonrpc": "2.0",
         "id": 1,
         "method": "getBalance",
-        "params": ["\(address)"]
-    }
-    """
+        "params": [
+            "\(address)" // Replace with the wallet address you want to check
+        ]
+    ] as [String: Any]
 
-    // Create the URL request object
-    guard let url = URL(string: rpcEndpointUrl) else {
-        completionHandler(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
-        return
-    }
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
-    request.httpBody = requestBody.data(using: .utf8)
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.httpBody = try? JSONSerialization.data(withJSONObject: rpcRequest, options: [])
 
-    // Create the URLSession data task
-    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-        guard let data = data else {
-            completionHandler(.failure(error ?? URLError(.badServerResponse)))
+    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        guard error == nil else {
+            print("Error: \(error!.localizedDescription)")
             return
         }
 
-        do {
-            let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-            guard let result = jsonObject?["result"] as? Int64 else {
-                completionHandler(.failure(NSError(domain: "JSON parsing error", code: 0, userInfo: nil)))
-                return
-            }
-
-            // Convert the balance from lamports to SOL
-            let balanceInSol = Double(result) / pow(10, 9)
-
-            completionHandler(.success(balanceInSol))
-
-        } catch {
-            completionHandler(.failure(error))
+        guard let data = data else {
+            print("No data returned from server")
+            return
         }
+
+        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+            print("Unable to parse response data as JSON")
+            return
+        }
+
+        if let error = json["error"] as? [String: Any] {
+            print("JSON RPC error: \(error)")
+            return
+        }
+
+        let result = json["result"] as? [String:Any]
+//        let context = json["context"] as? [String:Any]
+        guard let value = result?["value"] as? Int64 else {
+            print("Error")
+//            completionHandler(.failure(Error as! Error))
+            return
+        }
+//        let value = json["value"] as? Int64
+        
+        let friendlyValue = Double(value)/pow(10, 9)
+        completionHandler(.success(Double(friendlyValue)))
     }
 
     task.resume()
 }
-
 
 public func getLatestTransactionHashForBTCAddress(address: String, completion: @escaping(String, Int, Int) -> ()) {
     let blockstreamInfoApi = URL(string: "https://blockstream.info/api/address/\(address)/txs")!
