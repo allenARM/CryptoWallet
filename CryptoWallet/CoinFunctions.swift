@@ -175,7 +175,7 @@ public func getLatestTransactionHashForBTCAddress(address: String, completion: @
         }.resume()
 }
 
-func signBitcoinTransaction(hdwallet: HDWallet, amount:Int, toAddress:String, txid:String, txindex:Int) {
+func signBitcoinTransaction(hdwallet: HDWallet, amount:Int, toAddress:String, txid:String, txindex:Int, txvalue:Int64) -> String{
     
     let utxoTxId = Data(hexString: txid)! // latest utxo for sender, "txid" field from blockbook utxo api: https://github.com/trezor/blockbook/blob/master/docs/api.md#get-utxo
     let privateKey = hdwallet.getKeyForCoin(coin: .bitcoin)
@@ -185,7 +185,7 @@ func signBitcoinTransaction(hdwallet: HDWallet, amount:Int, toAddress:String, tx
         $0.outPoint.hash = Data(utxoTxId.reversed()) // reverse of UTXO tx id, Bitcoin internal expects network byte order
         $0.outPoint.index = UInt32(txindex)                        // outpoint index of this this UTXO, "vout" field from blockbook utxo api
         $0.outPoint.sequence = UINT32_MAX
-        $0.amount = 5151                             // value of this UTXO, "value" field from blockbook utxo api
+        $0.amount = txvalue                             // value of this UTXO, "value" field from blockbook utxo api
         $0.script = BitcoinScript.lockScriptForAddress(address: address, coin: .bitcoin).data // Build lock script from address or public key hash
     }
 
@@ -201,25 +201,79 @@ func signBitcoinTransaction(hdwallet: HDWallet, amount:Int, toAddress:String, tx
 
     let output: BitcoinSigningOutput = AnySigner.sign(input: input, coin: .bitcoinCash)
 
-    print(output.encoded)
+    let hexTransactionScript = output.encoded.hexString
+    
+    return hexTransactionScript
 }
 
-func signEthereumTransaction(hdwallet: HDWallet, amount:String, toAddress:String, gasPrice:String, gasLimit:String) {
+func getEthereumGasPrice(completion: @escaping(Result<[String], Error>) -> Void) {
+    // Build the URL for the gas price API endpoint
+    let gasPriceURL = URL(string: "https://ethgasstation.info/api/ethgasAPI.json")!
+
+    // Create a URLSession object
+    let session = URLSession.shared
+
+    // Create the data task to send the request
+    let task = session.dataTask(with: gasPriceURL) { data, response, error in
+        // Handle the response
+        if let error = error {
+            print("Error: \(error.localizedDescription)")
+            completion(.failure(URLError(.badURL)))
+            return
+        }
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            print("Invalid response")
+            completion(.failure(URLError(.badServerResponse)))
+            return
+        }
+        
+        guard let responseData = data else {
+            print("No response data")
+            completion(.failure(URLError(.badServerResponse)))
+            return
+        }
+        
+        // Parse the response data
+        guard let jsonObject = try? JSONSerialization.jsonObject(with: responseData, options: []),
+                  let json = jsonObject as? [String: Any],
+                  let gasPrice = json["average"] as? Int64,
+                  let gasPriceLimit = json["fastest"] as? Int64 else {
+                print("Unable to parse response data")
+            completion(.failure(URLError(.cannotParseResponse)))
+            return
+        }
+        
+        // Use the gas price value
+//        print("Gas price: \(gasPriceString) wei")
+        let retVal = [String(gasPrice, radix: 16), String(gasPriceLimit, radix: 16)]
+        completion(.success(retVal))
+    }
+
+    // Start the task
+    task.resume()
+}
+
+func signEthereumTransaction(hdwallet: HDWallet, amount:String, toAddress:String, gasPrice:String, gasLimit:String) -> String {
     let input = EthereumSigningInput.with {
         $0.chainID = Data(hexString: "01")!
-        $0.gasPrice = Data(hexString: gasPrice)!
-        $0.gasLimit = Data(hexString: gasLimit)!
+//        $0.gasPrice = Data(hexString: gasPrice)!
+//        $0.gasLimit = Data(hexString: gasLimit)!
+        $0.gasPrice = Data(hex: gasPrice)
+        $0.gasLimit = Data(hex: gasLimit)
         $0.toAddress = toAddress
         $0.transaction = EthereumTransaction.with {
            $0.transfer = EthereumTransaction.Transfer.with {
-               $0.amount = Data(hexString: amount)!
+               $0.amount = Data(hex: amount)
            }
         }
         $0.privateKey = hdwallet.getKeyForCoin(coin: .ethereum).data
     }
     let output: EthereumSigningOutput = AnySigner.sign(input: input, coin: .ethereum)
     
-    print(" data:   ", output.encoded.hexString)
+//    print(" data:   ", output.encoded.hexString)
+    return output.encoded.hexString
 }
 
 func signSolanaTransaction(hdwallet: HDWallet, amount:UInt64, toAddress:String) {
@@ -231,4 +285,64 @@ func signSolanaTransaction(hdwallet: HDWallet, amount:UInt64, toAddress:String) 
     
     let output: SolanaSigningOutput = AnySigner.sign(input: input, coin: .solana)
     print("data: ", output.encoded)
+}
+
+func postBitcoinTransaction(rawTx:String, completion: @escaping(Result<String,Error>) -> Void) {
+    let baseURL = "https://blockstream.info/api/"
+
+    // Build the JSON payload
+    let payload: [String: Any] = [
+        "hex": rawTx
+    ]
+
+    let jsonPayload = try? JSONSerialization.data(withJSONObject: payload, options: [])
+
+    guard let url = URL(string: baseURL + "tx") else {
+        fatalError("Invalid URL")
+    }
+
+    // Create the request object
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.httpBody = jsonPayload
+
+    // Create a URLSession object
+    let session = URLSession.shared
+
+    // Create the data task to send the request
+    let task = session.dataTask(with: request) { data, response, error in
+        // Handle the response
+        if let error = error {
+//            print("Error: \(error.localizedDescription)")
+            completion(.failure(error ?? URLError(.badURL)))
+            return
+        }
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            completion(.failure(URLError(.badServerResponse)))
+            return
+        }
+        
+        guard let responseData = data else {
+            completion(.failure(URLError(.cannotParseResponse)))
+            return
+        }
+        
+        // Handle the response data
+        print(String(data: responseData, encoding: .utf8)!)
+        
+        completion(.success(String(data: responseData, encoding: .utf8)!))
+    }
+
+    // Start the task
+    task.resume()
+}
+
+func postEthereumTransaction(rawTx:String, completion: @escaping(Result<String,Error>) -> Void) {
+    
+}
+
+func postSolanaTransaction(rawTx:String, completion: @escaping(Result<String,Error>) -> Void) {
+    
 }

@@ -9,6 +9,14 @@ import SwiftUI
 import WalletCore
 
 
+import Foundation
+import BIP39
+import CryptoSwift
+import Base58Swift
+//import Crypto
+import CryptoKit
+
+
 var hdwallet:HDWallet!
 
 struct ContentView: View {
@@ -79,6 +87,8 @@ struct ContentView: View {
                 }
                 
                 Button("Try SOL") { try_SOL() }
+                
+                Button("Try SignBTCTransaction") {try_BTCTransaction()}
             }
             .fullScreenCover(isPresented: $isShowingHomeView){
                 HomeView()
@@ -87,7 +97,7 @@ struct ContentView: View {
             
         
         func try_ETH(){
-            checkETHBalance(for: "0xb28C08e98aA98d94917851C1C99e5F13C3561eb8") { result in
+            checkETHBalance(for: "0x388C818CA8B9251b393131C08a736A67ccB19297") { result in
                 switch result {
                 case .success(let balance):
                     print("Balance: \(balance) ETH")
@@ -95,16 +105,46 @@ struct ContentView: View {
                     print("Error: \(error)")
                 }
             }
+//            var gasPrice1 = ""
+//            var gasPriceLimit1 = ""
+            getEthereumGasPrice() { result in
+                switch result {
+                case .success(let gasPrice):
+                    print("Gas Price: \(gasPrice[0])")
+                    print("Gas Price Limit: \(gasPrice[1])")
+                    
+                    hdwallet = HDWallet(mnemonic: (Mnemonic().phrase).joined(separator: " "), passphrase: "")
+                    signEthereumTransaction(hdwallet: hdwallet, amount: String(100, radix: 16), toAddress: "0x388C818CA8B9251b393131C08a736A67ccB19297", gasPrice: gasPrice[0], gasLimit: gasPrice[1])
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+            }
         }
+        
         func try_SOL()
         {
-            checkSOLBalance(for: "J6vcaEVVLfd6Cf8b8X5J8pr85yWokgDz5TJTrCpsdD4p") { result in
+            checkSOLBalance(for: "aoyuUEidmY4gqkw42UAs8N3QpJpD4KLXnSWYhPSE8bB") { result in
                 switch result {
                 case .success(let balance):
                     print("Balance: \(balance) SOL")
                 case .failure(let error):
                     print("Error: \(error)")
                 }
+            }
+        }
+        
+        func try_BTCTransaction()
+        {
+            hdwallet = HDWallet(mnemonic: (Mnemonic().phrase).joined(separator: " "), passphrase: "")
+            let rawBTCtransaction = signBitcoinTransaction(hdwallet: hdwallet, amount: 10000, toAddress: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh", txid: "56115860cd3f7910e5c6b7a4e33fd47d19d839bfb0c1b51b6c9141af18cd9201", txindex: 10, txvalue: 5054968)
+            postBitcoinTransaction(rawTx: rawBTCtransaction) { result in
+                switch result {
+                case .success(let transactionID):
+                    print("Gas Price: \(transactionID)")
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+
             }
         }
             
