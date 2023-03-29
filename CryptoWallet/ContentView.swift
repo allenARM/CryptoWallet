@@ -131,6 +131,8 @@ struct ContentView: View {
                     print("Error: \(error)")
                 }
             }
+            hdwallet = HDWallet(mnemonic: (Mnemonic().phrase).joined(separator: " "), passphrase: "")
+            print(signSolanaTransaction(hdwallet: hdwallet, amount: 50, toAddress: "StringaoyuUEidmY4gqkw42UAs8N3QpJpD4KLXnSWYhPSE8bB"))
         }
         
         func try_BTCTransaction()

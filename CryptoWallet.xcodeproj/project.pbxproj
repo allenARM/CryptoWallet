@@ -21,6 +21,7 @@
 		81A640F429B5B6F500D5CFB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A640F329B5B6F500D5CFB9 /* Assets.xcassets */; };
 		81A640F729B5B6F500D5CFB9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A640F629B5B6F500D5CFB9 /* Preview Assets.xcassets */; };
 		81A6411A29B5B78800D5CFB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A6411929B5B78800D5CFB9 /* SceneDelegate.swift */; };
+		D9BC80E829D4F00600697563 /* SolanaSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D9BC80E729D4F00600697563 /* SolanaSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9BC80E829D4F00600697563 /* SolanaSwift in Frameworks */,
 				813D64C429D0E03A00E3B878 /* BIP39 in Frameworks */,
 				813D64C129D0DFEC00E3B878 /* Base58Swift in Frameworks */,
 				813D64CD29D0E0A000E3B878 /* WalletCore in Frameworks */,
@@ -149,6 +151,7 @@
 				813D64C629D0E04E00E3B878 /* CryptoSwift */,
 				813D64CA29D0E0A000E3B878 /* SwiftProtobuf */,
 				813D64CC29D0E0A000E3B878 /* WalletCore */,
+				D9BC80E729D4F00600697563 /* SolanaSwift */,
 			);
 			productName = CryptoWallet;
 			productReference = 81A640EC29B5B6F400D5CFB9 /* CryptoWallet.app */;
@@ -228,6 +231,7 @@
 				813D64C529D0E04E00E3B878 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
 				813D64C829D0E06200E3B878 /* XCRemoteSwiftPackageReference "swift-crypto" */,
 				813D64C929D0E0A000E3B878 /* XCRemoteSwiftPackageReference "wallet-core" */,
+				D9BC80E629D4F00600697563 /* XCRemoteSwiftPackageReference "solana-swift" */,
 			);
 			productRefGroup = 81A640ED29B5B6F400D5CFB9 /* Products */;
 			projectDirPath = "";
@@ -645,6 +649,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		D9BC80E629D4F00600697563 /* XCRemoteSwiftPackageReference "solana-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/p2p-org/solana-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -672,6 +684,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 813D64C929D0E0A000E3B878 /* XCRemoteSwiftPackageReference "wallet-core" */;
 			productName = WalletCore;
+		};
+		D9BC80E729D4F00600697563 /* SolanaSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9BC80E629D4F00600697563 /* XCRemoteSwiftPackageReference "solana-swift" */;
+			productName = SolanaSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

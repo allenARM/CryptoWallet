@@ -276,15 +276,15 @@ func signEthereumTransaction(hdwallet: HDWallet, amount:String, toAddress:String
     return output.encoded.hexString
 }
 
-func signSolanaTransaction(hdwallet: HDWallet, amount:UInt64, toAddress:String) {
+func signSolanaTransaction(hdwallet: HDWallet, amount:UInt64, toAddress:String) -> String {
     let input = SolanaSigningInput.with {
         $0.transferTransaction.recipient = toAddress;
         $0.transferTransaction.value = amount;
         $0.privateKey = hdwallet.getKeyForCoin(coin: .solana).data
     }
-    
     let output: SolanaSigningOutput = AnySigner.sign(input: input, coin: .solana)
-    print("data: ", output.encoded)
+//    print("data: ", output.encoded)
+    return output.encoded
 }
 
 func postBitcoinTransaction(rawTx:String, completion: @escaping(Result<String,Error>) -> Void) {
