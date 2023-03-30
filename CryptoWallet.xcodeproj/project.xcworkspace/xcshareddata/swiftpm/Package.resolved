@@ -37,21 +37,21 @@
       }
     },
     {
-      "identity" : "secp256k1.swift",
+      "identity" : "ed25519swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Boilertalk/secp256k1.swift.git",
+      "location" : "https://github.com/crewshin/ed25519swift",
       "state" : {
-        "revision" : "cd187c632fb812fd93711a9f7e644adb7e5f97f0",
-        "version" : "0.1.7"
+        "revision" : "b14719cad9fa541a5ec9b3de5aff8e9c4cc6ea07",
+        "version" : "1.2.6"
       }
     },
     {
       "identity" : "solana-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/p2p-org/solana-swift",
+      "location" : "https://github.com/crewshin/solana-swift.git",
       "state" : {
-        "revision" : "c8bead282faabbd68cfb90e2bae0da461c2f7635",
-        "version" : "3.0.0"
+        "branch" : "main",
+        "revision" : "61a53dee2a371127bb1998a62a5ec9aa9c419acb"
       }
     },
     {
@@ -61,24 +61,6 @@
       "state" : {
         "revision" : "da0fe44138ab86e380f40a2acbd8a611b07d3f64",
         "version" : "2.4.0"
-      }
-    },
-    {
-      "identity" : "task-retrying-swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/bigearsenal/task-retrying-swift.git",
-      "state" : {
-        "revision" : "208f1e8dfa93022a7d39ab5b334d5f43a934d4b1",
-        "version" : "2.0.0"
-      }
-    },
-    {
-      "identity" : "tweetnacl-swiftwrap",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/bitmark-inc/tweetnacl-swiftwrap.git",
-      "state" : {
-        "revision" : "f8fd111642bf2336b11ef9ea828510693106e954",
-        "version" : "1.1.0"
       }
     },
     {

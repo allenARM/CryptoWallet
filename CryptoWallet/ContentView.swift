@@ -16,6 +16,7 @@ import Base58Swift
 //import Crypto
 import CryptoKit
 
+import Solana
 
 var hdwallet:HDWallet!
 
@@ -61,6 +62,9 @@ struct ContentView: View {
         @State private var words: [String] = []
         @State private var isShowingHomeView = false
         
+        @State private var accountSecretKey: Data?
+
+        
         var body: some View {
             VStack{
                 TextField("12 Words", text: $TextField12Words)
@@ -83,10 +87,11 @@ struct ContentView: View {
                     }
                 }
                 
-                Button("Try ETH") { try_ETH()
-                }
+                Button("Try ETH") { try_ETH() }
                 
-                Button("Try SOL") { try_SOL() }
+                Button("Try SOL") {
+                    try_SOL()
+                }
                 
                 Button("Try SignBTCTransaction") {try_BTCTransaction()}
             }
@@ -131,8 +136,15 @@ struct ContentView: View {
                     print("Error: \(error)")
                 }
             }
-            hdwallet = HDWallet(mnemonic: (Mnemonic().phrase).joined(separator: " "), passphrase: "")
-            print(signSolanaTransaction(hdwallet: hdwallet, amount: 50, toAddress: "StringaoyuUEidmY4gqkw42UAs8N3QpJpD4KLXnSWYhPSE8bB"))
+            let words = getWords()
+            hdwallet = HDWallet(mnemonic: words.joined(separator: " "), passphrase: "")
+            print(hdwallet.getKeyForCoin(coin: .solana).data.hashValue)
+            
+            let sol = Solana(network: .main)
+//            print(signSolanaTransaction(hdwallet: hdwallet, amount: 50, toAddress: "StringaoyuUEidmY4gqkw42UAs8N3QpJpD4KLXnSWYhPSE8bB"))
+                        
+//
+            
         }
         
         func try_BTCTransaction()
@@ -142,7 +154,7 @@ struct ContentView: View {
             postBitcoinTransaction(rawTx: rawBTCtransaction) { result in
                 switch result {
                 case .success(let transactionID):
-                    print("Gas Price: \(transactionID)")
+                    print("Transaction accepted by server: \(transactionID)")
                 case .failure(let error):
                     print("Error: \(error)")
                 }

@@ -15,7 +15,6 @@ import WalletCore
 
 public func getWords() -> [String] {
     let mnemonic = Mnemonic().phrase
-    
     return mnemonic
 }
 
