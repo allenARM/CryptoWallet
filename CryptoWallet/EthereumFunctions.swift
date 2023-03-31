@@ -131,4 +131,5 @@ func signEthereumTransaction(hdwallet: HDWallet, amount:String, toAddress:String
 
 
 func postEthereumTransaction(rawTx:String, completion: @escaping(Result<String,Error>) -> Void) {
+    
 }

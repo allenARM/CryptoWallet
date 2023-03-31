@@ -175,8 +175,8 @@ struct ContentView: View {
 
 //            let btcAddress = hdwallet.getAddressForCoin(coin: .bitcoin)
 //            print("BTC: " + btcAddress)
-//            let ethAddress = hdwallet.getAddressForCoin(coin: .ethereum)
-//            print("ETH: " + ethAddress)
+            let ethAddress = hdwallet.getAddressForCoin(coin: .ethereum)
+            print("ETH: " + ethAddress)
 //            let solAddress = hdwallet.getAddressForCoin(coin: .solana)
 //            print("SOL: " + solAddress)
 //
@@ -194,13 +194,103 @@ struct ContentView: View {
 }
     
     struct CreateWalletView: View {
+//        @State private var words: [String] = []
+
         var body: some View {
-            Text("Create Wallet")
+            let words = getWords()
+            HStack {
+                VStack {
+                    Text("This is your secret key.")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(RoundedRectangle(cornerRadius: CGFloat(20)).foregroundColor(.gray))
+                    Text("Please write it down and save it in safe place. You will need it to loging to your account")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(RoundedRectangle(cornerRadius: CGFloat(20)).foregroundColor(.blue))
+                    Text("Never share your secret key with anyone.")
+                        .font(.title3)
+                        .foregroundColor(.red)
+                        .padding()
+                        .background(RoundedRectangle(cornerRadius: CGFloat(20)).foregroundColor(.white))
+                }
+            }
+            HStack {
+                VStack {
+                    Text("1: " + words[0])
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Capsule().foregroundColor(.blue))
+                    Text("2: " + words[1])
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Capsule().foregroundColor(.blue))
+                    Text("3: " + words[2])
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Capsule().foregroundColor(.blue))
+                    Text("4: " + words[3])
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Capsule().foregroundColor(.blue))
+                    Text("5: " + words[4])
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Capsule().foregroundColor(.blue))
+                    Text("6: " + words[5])
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Capsule().foregroundColor(.blue))
+                }
+                VStack {
+                    Text("7: " + words[6])
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Capsule().foregroundColor(.blue))
+                    Text("8: " + words[7])
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Capsule().foregroundColor(.blue))
+                    Text("9: " + words[8])
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Capsule().foregroundColor(.blue))
+                    Text("10: " + words[9])
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Capsule().foregroundColor(.blue))
+                    Text("11: " + words[10])
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Capsule().foregroundColor(.blue))
+                    Text("12: " + words[11])
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Capsule().foregroundColor(.blue))
+                }
+            }
         }
         
         func createWalletButtonTapped() {
-            // Implement wallet creation functionality here
-            // Then dismiss the view
+            // Split the input into individual words and display them
+//            words = getWords()
+//            for word in words {
+//                print(word)
+//            }
         }
     }
 }
