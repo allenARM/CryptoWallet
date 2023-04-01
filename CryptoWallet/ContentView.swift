@@ -15,10 +15,24 @@ import CryptoSwift
 import Base58Swift
 //import Crypto
 import CryptoKit
+import web3
 
-import Solana
+public var hdwallet:HDWallet!
 
-var hdwallet:HDWallet!
+// Replace the following variable with your own Infura project ID
+let infuraProjectId = "a30677d78d3d45e19fd10d4a79a591c2"
+
+// Construct the Infura API endpoint URL
+let urlString = "https://mainnet.infura.io/v3/\(infuraProjectId)"
+public let url = URL(string: urlString)!
+
+//    guard let clientUrl = URL(string: "https://an-infura-or-similar-url.com/123") else { return }
+public let client = EthereumHttpClient(url: url)
+
+public var blockNum = 0
+
+public var ethBal:Int64!
+
 
 struct ContentView: View {
     
@@ -51,6 +65,14 @@ struct ContentView: View {
                         .cornerRadius(8)
                         .padding(.horizontal, 25)
                 }
+            }
+            .task {
+                do {
+                    blockNum = try await client.eth_blockNumber()
+                    try await client.eth_getBalance(address: EthereumAddress(stringLiteral: "0x388C818CA8B9251b393131C08a736A67ccB19297"), block: EthereumBlock(rawValue: blockNum)).
+                        
+                }
+                catch{}
             }
         }
     }
@@ -112,18 +134,18 @@ struct ContentView: View {
             }
 //            var gasPrice1 = ""
 //            var gasPriceLimit1 = ""
-            getEthereumGasPrice() { result in
-                switch result {
-                case .success(let gasPrice):
-                    print("Gas Price: \(gasPrice[0])")
-                    print("Gas Price Limit: \(gasPrice[1])")
-                    
-                    hdwallet = HDWallet(mnemonic: (Mnemonic().phrase).joined(separator: " "), passphrase: "")
-                    signEthereumTransaction(hdwallet: hdwallet, amount: String(100, radix: 16), toAddress: "0x388C818CA8B9251b393131C08a736A67ccB19297", gasPrice: gasPrice[0], gasLimit: gasPrice[1])
-                case .failure(let error):
-                    print("Error: \(error)")
-                }
-            }
+//            getEthereumGasPrice() { result in
+//                switch result {
+//                case .success(let gasPrice):
+//                    print("Gas Price: \(gasPrice[0])")
+//                    print("Gas Price Limit: \(gasPrice[1])")
+//
+//                    hdwallet = HDWallet(mnemonic: (Mnemonic().phrase).joined(separator: " "), passphrase: "")
+//                    signEthereumTransaction(hdwallet: hdwallet, amount: String(100, radix: 16), toAddress: "0x388C818CA8B9251b393131C08a736A67ccB19297", gasPrice: gasPrice[0], gasLimit: gasPrice[1])
+//                case .failure(let error):
+//                    print("Error: \(error)")
+//                }
+//            }
         }
         
         func try_SOL()
@@ -140,7 +162,7 @@ struct ContentView: View {
             hdwallet = HDWallet(mnemonic: words.joined(separator: " "), passphrase: "")
             print(hdwallet.getKeyForCoin(coin: .solana).data.hashValue)
             
-            let sol = Solana(network: .main)
+//            let sol = Solana(network: .main)
 //            print(signSolanaTransaction(hdwallet: hdwallet, amount: 50, toAddress: "StringaoyuUEidmY4gqkw42UAs8N3QpJpD4KLXnSWYhPSE8bB"))
                         
 //

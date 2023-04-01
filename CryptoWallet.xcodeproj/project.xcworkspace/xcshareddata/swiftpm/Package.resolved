@@ -37,21 +37,39 @@
       }
     },
     {
-      "identity" : "ed25519swift",
+      "identity" : "generic-json-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/crewshin/ed25519swift",
+      "location" : "https://github.com/iwill/generic-json-swift",
       "state" : {
-        "revision" : "b14719cad9fa541a5ec9b3de5aff8e9c4cc6ea07",
-        "version" : "1.2.6"
+        "revision" : "0a06575f4038b504e78ac330913d920f1630f510",
+        "version" : "2.0.2"
       }
     },
     {
-      "identity" : "solana-swift",
+      "identity" : "secp256k1.swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/crewshin/solana-swift.git",
+      "location" : "https://github.com/GigaBitcoin/secp256k1.swift.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "61a53dee2a371127bb1998a62a5ec9aa9c419acb"
+        "revision" : "48fb20fce4ca3aad89180448a127d5bc16f0e44c",
+        "version" : "0.10.0"
+      }
+    },
+    {
+      "identity" : "swift-atomics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-atomics.git",
+      "state" : {
+        "revision" : "ff3d2212b6b093db7f177d0855adbc4ef9c5f036",
+        "version" : "1.0.3"
+      }
+    },
+    {
+      "identity" : "swift-collections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-collections.git",
+      "state" : {
+        "revision" : "937e904258d22af6e447a0b72c0bc67583ef64a2",
+        "version" : "1.0.4"
       }
     },
     {
@@ -64,12 +82,66 @@
       }
     },
     {
+      "identity" : "swift-log",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-log.git",
+      "state" : {
+        "revision" : "32e8d724467f8fe623624570367e3d50c5638e46",
+        "version" : "1.5.2"
+      }
+    },
+    {
+      "identity" : "swift-nio",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-nio.git",
+      "state" : {
+        "revision" : "9b2848d76f5caad08b97e71a04345aa5bdb23a06",
+        "version" : "2.49.0"
+      }
+    },
+    {
+      "identity" : "swift-nio-ssl",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-nio-ssl.git",
+      "state" : {
+        "revision" : "4fb7ead803e38949eb1d6fabb849206a72c580f3",
+        "version" : "2.23.0"
+      }
+    },
+    {
+      "identity" : "swift-nio-transport-services",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-nio-transport-services.git",
+      "state" : {
+        "revision" : "c0d9a144cfaec8d3d596aadde3039286a266c15c",
+        "version" : "1.15.0"
+      }
+    },
+    {
       "identity" : "wallet-core",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/trustwallet/wallet-core",
       "state" : {
         "revision" : "27e0e5746b94e0a52c9e6e16c6e6ea79b8a4c0b7",
         "version" : "3.1.20"
+      }
+    },
+    {
+      "identity" : "web3.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/argentlabs/web3.swift",
+      "state" : {
+        "revision" : "8ca33e700ed8de6137a0e1471017aa3b3c8de0db",
+        "version" : "1.6.0"
+      }
+    },
+    {
+      "identity" : "websocket-kit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vapor/websocket-kit.git",
+      "state" : {
+        "revision" : "2b8885974e8d9f522e787805000553f4f7cce8a0",
+        "version" : "2.7.0"
       }
     }
   ],

@@ -23,7 +23,7 @@
 		81A6411A29B5B78800D5CFB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A6411929B5B78800D5CFB9 /* SceneDelegate.swift */; };
 		D9BC80EA29D51BED00697563 /* SolanaFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BC80E929D51BED00697563 /* SolanaFunctions.swift */; };
 		D9BC80EC29D51C2D00697563 /* EthereumFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BC80EB29D51C2D00697563 /* EthereumFunctions.swift */; };
-		D9BC80EF29D529AB00697563 /* Solana in Frameworks */ = {isa = PBXBuildFile; productRef = D9BC80EE29D529AB00697563 /* Solana */; };
+		D9BC80FE29D8145A00697563 /* web3.swift in Frameworks */ = {isa = PBXBuildFile; productRef = D9BC80FD29D8145A00697563 /* web3.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,9 +67,9 @@
 			files = (
 				813D64C429D0E03A00E3B878 /* BIP39 in Frameworks */,
 				813D64C129D0DFEC00E3B878 /* Base58Swift in Frameworks */,
-				D9BC80EF29D529AB00697563 /* Solana in Frameworks */,
 				813D64CD29D0E0A000E3B878 /* WalletCore in Frameworks */,
 				813D64C729D0E04E00E3B878 /* CryptoSwift in Frameworks */,
+				D9BC80FE29D8145A00697563 /* web3.swift in Frameworks */,
 				813D64CB29D0E0A000E3B878 /* SwiftProtobuf in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -157,7 +157,7 @@
 				813D64C629D0E04E00E3B878 /* CryptoSwift */,
 				813D64CA29D0E0A000E3B878 /* SwiftProtobuf */,
 				813D64CC29D0E0A000E3B878 /* WalletCore */,
-				D9BC80EE29D529AB00697563 /* Solana */,
+				D9BC80FD29D8145A00697563 /* web3.swift */,
 			);
 			productName = CryptoWallet;
 			productReference = 81A640EC29B5B6F400D5CFB9 /* CryptoWallet.app */;
@@ -237,7 +237,7 @@
 				813D64C529D0E04E00E3B878 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
 				813D64C829D0E06200E3B878 /* XCRemoteSwiftPackageReference "swift-crypto" */,
 				813D64C929D0E0A000E3B878 /* XCRemoteSwiftPackageReference "wallet-core" */,
-				D9BC80ED29D529AB00697563 /* XCRemoteSwiftPackageReference "solana-swift" */,
+				D9BC80FC29D8145A00697563 /* XCRemoteSwiftPackageReference "web3" */,
 			);
 			productRefGroup = 81A640ED29B5B6F400D5CFB9 /* Products */;
 			projectDirPath = "";
@@ -657,12 +657,12 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		D9BC80ED29D529AB00697563 /* XCRemoteSwiftPackageReference "solana-swift" */ = {
+		D9BC80FC29D8145A00697563 /* XCRemoteSwiftPackageReference "web3" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/crewshin/solana-swift.git";
+			repositoryURL = "https://github.com/argentlabs/web3.swift";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -693,10 +693,10 @@
 			package = 813D64C929D0E0A000E3B878 /* XCRemoteSwiftPackageReference "wallet-core" */;
 			productName = WalletCore;
 		};
-		D9BC80EE29D529AB00697563 /* Solana */ = {
+		D9BC80FD29D8145A00697563 /* web3.swift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D9BC80ED29D529AB00697563 /* XCRemoteSwiftPackageReference "solana-swift" */;
-			productName = Solana;
+			package = D9BC80FC29D8145A00697563 /* XCRemoteSwiftPackageReference "web3" */;
+			productName = web3.swift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
