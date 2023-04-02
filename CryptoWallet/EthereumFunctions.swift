@@ -30,6 +30,7 @@ public struct EthereumConnect {
     var ethBalNormilized: Double!
     var gasPrice: BigUInt!
     var gasPriceinGwei: Int!
+    var ethKeyLocalStorage = EthereumKeyLocalStorage()
 }
 
 public var ethConnect = EthereumConnect()
@@ -181,5 +182,15 @@ func signEthereumTransaction(hdwallet: HDWallet, amount:String, toAddress:String
 
 
 
-func postEthereumTransaction(rawTx:String, completion: @escaping(Result<String,Error>) -> Void) {
+func postEthereumTransaction(rawTx:String) {
+    let pkData = hdwallet.getKeyForCoin(coin: .ethereum)
+    
+    do{
+        try ethConnect.ethKeyLocalStorage.storePrivateKey(key: pkData.data)
+        let account = try EthereumAccount(keyStorage: ethConnect.ethKeyLocalStorage)
+    }
+    catch{}
+
+    
+//    let pk = EthereumSingleKeyStorageProtocol().storePrivateKey(key: pkData)
 }

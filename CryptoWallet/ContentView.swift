@@ -121,6 +121,19 @@ struct ContentView: View {
             }
             getEthereumGasPrice()
             print(ethConnect.gasPriceinGwei)
+            
+            let words = getWords()
+            hdwallet = HDWallet(mnemonic: words.joined(separator: " "), passphrase: "")
+            print("------------------------------------------")
+            print(hdwallet.getKeyForCoin(coin: .ethereum).data.hashValue)
+            do{
+                postEthereumTransaction(rawTx: "lol")
+                print(try ethConnect.ethKeyLocalStorage.loadPrivateKey().hashValue)
+            }
+            catch{
+                print("it didn't work")
+            }
+            print("------------------------------------------")
 //            var gasPrice1 = ""
 //            var gasPriceLimit1 = ""
 //            getEthereumGasPrice() { result in
