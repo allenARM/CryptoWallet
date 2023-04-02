@@ -184,10 +184,10 @@ func signEthereumTransaction(hdwallet: HDWallet, amount:String, toAddress:String
 
 
 func postEthereumTransaction(amount:BigUInt, toAddress:String, gasPrice:BigUInt, gasLimit:BigUInt) async {
-    let pkData = hdwallet.getKeyForCoin(coin: .ethereum)
+//    let pkData = hdwallet.getKeyForCoin(coin: .ethereum)
     
     do{
-        try ethConnect.ethKeyLocalStorage.storePrivateKey(key: pkData.data)
+//        try ethConnect.ethKeyLocalStorage.storePrivateKey(key: pkData.data)
         let account = try EthereumAccount(keyStorage: ethConnect.ethKeyLocalStorage)
         
         let testTransaction = EthereumTransaction(from: ethConnect.ethAddress, to: EthereumAddress(stringLiteral: toAddress), value: amount, data: try ethConnect.ethKeyLocalStorage.loadPrivateKey(), gasPrice: gasPrice, gasLimit: gasLimit)
@@ -201,5 +201,4 @@ func postEthereumTransaction(amount:BigUInt, toAddress:String, gasPrice:BigUInt,
         }
     }
     catch{}
-//    let pk = EthereumSingleKeyStorageProtocol().storePrivateKey(key: pkData)
 }

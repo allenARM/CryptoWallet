@@ -130,6 +130,8 @@ struct ContentView: View {
             do{
                 //GO TO SPECIFIC VIEW FOR ASYNC CALL OF ETH TRANSACTION
 //                postEthereumTransaction(amount: <#T##BigUInt#>, toAddress: <#T##String#>, gasPrice: <#T##BigUInt#>, gasLimit: <#T##BigUInt#>)
+                let pkData = hdwallet.getKeyForCoin(coin: .ethereum)
+                try ethConnect.ethKeyLocalStorage.storePrivateKey(key: pkData.data)
                 print(try ethConnect.ethKeyLocalStorage.loadPrivateKey().hashValue)
             }
             catch{
@@ -162,8 +164,8 @@ struct ContentView: View {
                     print("Error: \(error)")
                 }
             }
-            let words = getWords()
-            hdwallet = HDWallet(mnemonic: words.joined(separator: " "), passphrase: "")
+//            let words = getWords()
+//            hdwallet = HDWallet(mnemonic: words.joined(separator: " "), passphrase: "")
             print(hdwallet.getKeyForCoin(coin: .solana).data.hashValue)
             
 //            let sol = Solana(network: .main)
@@ -175,7 +177,7 @@ struct ContentView: View {
         
         func try_BTCTransaction()
         {
-            hdwallet = HDWallet(mnemonic: (Mnemonic().phrase).joined(separator: " "), passphrase: "")
+//            hdwallet = HDWallet(mnemonic: (Mnemonic().phrase).joined(separator: " "), passphrase: "")
             let rawBTCtransaction = signBitcoinTransaction(hdwallet: hdwallet, amount: 10000, toAddress: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh", txid: "56115860cd3f7910e5c6b7a4e33fd47d19d839bfb0c1b51b6c9141af18cd9201", txindex: 10, txvalue: 5054968)
             postBitcoinTransaction(rawTx: rawBTCtransaction) { result in
                 switch result {
