@@ -16,23 +16,9 @@ import Base58Swift
 //import Crypto
 import CryptoKit
 import web3
+import BigInt
 
 public var hdwallet:HDWallet!
-
-// Replace the following variable with your own Infura project ID
-let infuraProjectId = "a30677d78d3d45e19fd10d4a79a591c2"
-
-// Construct the Infura API endpoint URL
-let urlString = "https://mainnet.infura.io/v3/\(infuraProjectId)"
-public let url = URL(string: urlString)!
-
-//    guard let clientUrl = URL(string: "https://an-infura-or-similar-url.com/123") else { return }
-public let client = EthereumHttpClient(url: url)
-
-public var blockNum = 0
-
-public var ethBal:Int64!
-
 
 struct ContentView: View {
     
@@ -68,8 +54,9 @@ struct ContentView: View {
             }
             .task {
                 do {
-                    blockNum = try await client.eth_blockNumber()
-                    try await client.eth_getBalance(address: EthereumAddress(stringLiteral: "0x388C818CA8B9251b393131C08a736A67ccB19297"), block: EthereumBlock(rawValue: blockNum)).
+                    ethConnect.blockNum = try await ethConnect.client.eth_blockNumber()
+                    ethConnect.ethBal = BigUInt(try await ethConnect.client.eth_getBalance(address: EthereumAddress(stringLiteral: "0xFe496d439E96354a5f787f95Fba1A449d1b41280"), block: EthereumBlock(rawValue: ethConnect.blockNum)))
+                    ethConnect.gasPrice = BigUInt(try await ethConnect.client.eth_gasPrice())
                         
                 }
                 catch{}
@@ -132,6 +119,8 @@ struct ContentView: View {
                     print("Error: \(error)")
                 }
             }
+            getEthereumGasPrice()
+            print(ethConnect.gasPriceinGwei)
 //            var gasPrice1 = ""
 //            var gasPriceLimit1 = ""
 //            getEthereumGasPrice() { result in

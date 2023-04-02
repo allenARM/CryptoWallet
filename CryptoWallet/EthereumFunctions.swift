@@ -11,6 +11,29 @@ import WalletCore
 import BigInt
 import web3
 
+//// Replace the following variable with your own Infura project ID
+//let infuraProjectId = "a30677d78d3d45e19fd10d4a79a591c2"
+//
+//// Construct the Infura API endpoint URL
+//let urlString = "https://mainnet.infura.io/v3/\(infuraProjectId)"
+//public let url = URL(string: urlString)!
+
+//    guard let clientUrl = URL(string: "https://an-infura-or-similar-url.com/123") else { return }
+//public let client = EthereumHttpClient(url: url)
+//public var blockNum = 0
+//public var ethBal:BigUInt!
+
+public struct EthereumConnect {
+    let client = EthereumHttpClient(url: URL(string: "https://mainnet.infura.io/v3/a30677d78d3d45e19fd10d4a79a591c2")!)
+    var blockNum: Int!
+    var ethBal: BigUInt!
+    var ethBalNormilized: Double!
+    var gasPrice: BigUInt!
+    var gasPriceinGwei: Int!
+}
+
+public var ethConnect = EthereumConnect()
+
 public func checkETHBalance(for address: String, completionHandler: @escaping (Result<Double, Error>) -> Void) {
 //    // Replace the following variable with your own Infura project ID
 //    let infuraProjectId = "a30677d78d3d45e19fd10d4a79a591c2"
@@ -22,7 +45,26 @@ public func checkETHBalance(for address: String, completionHandler: @escaping (R
 ////    guard let clientUrl = URL(string: "https://an-infura-or-similar-url.com/123") else { return }
 //    let client = EthereumHttpClient(url: url)
 
-    print(ethBal)
+    let divisor = BigUInt(10).power(13)
+    let finalEthBal = (ethConnect.ethBal)/divisor
+    var floatValue:Double!
+    if (finalEthBal.description.count < 6)
+    {
+        floatValue = Double("0." + finalEthBal.description)
+    }
+    else
+    {
+        floatValue = Double(finalEthBal.description)!/pow(10.0, 5.0)
+    }
+    if (floatValue > 0){
+        completionHandler(.success(floatValue));
+        ethConnect.ethBalNormilized = floatValue
+    }
+    else{
+        completionHandler(.success(0));
+        ethConnect.ethBalNormilized = floatValue
+    }
+//    print("ETH balance: \(String(finalEthBal))");
 //
 //    // Construct the JSON-RPC request body
 //    let requestBody = """
@@ -65,53 +107,55 @@ public func checkETHBalance(for address: String, completionHandler: @escaping (R
 //    task.resume()
 }
 
-func getEthereumGasPrice(completion: @escaping(Result<[String], Error>) -> Void) {
-    // Build the URL for the gas price API endpoint
-    let gasPriceURL = URL(string: "https://ethgasstation.info/api/ethgasAPI.json")!
-
-    // Create a URLSession object
-    let session = URLSession.shared
-
-    // Create the data task to send the request
-    let task = session.dataTask(with: gasPriceURL) { data, response, error in
-        // Handle the response
-        if let error = error {
-            print("Error: \(error.localizedDescription)")
-            completion(.failure(URLError(.badURL)))
-            return
-        }
-        
-        guard let httpResponse = response as? HTTPURLResponse,
-              (200...299).contains(httpResponse.statusCode) else {
-            print("Invalid response")
-            completion(.failure(URLError(.badServerResponse)))
-            return
-        }
-        
-        guard let responseData = data else {
-            print("No response data")
-            completion(.failure(URLError(.badServerResponse)))
-            return
-        }
-        
-        // Parse the response data
-        guard let jsonObject = try? JSONSerialization.jsonObject(with: responseData, options: []),
-                  let json = jsonObject as? [String: Any],
-                  let gasPrice = json["average"] as? Int64,
-                  let gasPriceLimit = json["fastest"] as? Int64 else {
-                print("Unable to parse response data")
-            completion(.failure(URLError(.cannotParseResponse)))
-            return
-        }
-        
-        // Use the gas price value
-//        print("Gas price: \(gasPriceString) wei")
-        let retVal = [String(gasPrice, radix: 16), String(gasPriceLimit, radix: 16)]
-        completion(.success(retVal))
-    }
-
-    // Start the task
-    task.resume()
+func getEthereumGasPrice() {
+    let divisor = BigUInt(10).power(9)
+    ethConnect.gasPriceinGwei = Int(ethConnect.gasPrice/divisor) + 1
+//    // Build the URL for the gas price API endpoint
+//    let gasPriceURL = URL(string: "https://ethgasstation.info/api/ethgasAPI.json")!
+//
+//    // Create a URLSession object
+//    let session = URLSession.shared
+//
+//    // Create the data task to send the request
+//    let task = session.dataTask(with: gasPriceURL) { data, response, error in
+//        // Handle the response
+//        if let error = error {
+//            print("Error: \(error.localizedDescription)")
+//            completion(.failure(URLError(.badURL)))
+//            return
+//        }
+//
+//        guard let httpResponse = response as? HTTPURLResponse,
+//              (200...299).contains(httpResponse.statusCode) else {
+//            print("Invalid response")
+//            completion(.failure(URLError(.badServerResponse)))
+//            return
+//        }
+//
+//        guard let responseData = data else {
+//            print("No response data")
+//            completion(.failure(URLError(.badServerResponse)))
+//            return
+//        }
+//
+//        // Parse the response data
+//        guard let jsonObject = try? JSONSerialization.jsonObject(with: responseData, options: []),
+//                  let json = jsonObject as? [String: Any],
+//                  let gasPrice = json["average"] as? Int64,
+//                  let gasPriceLimit = json["fastest"] as? Int64 else {
+//                print("Unable to parse response data")
+//            completion(.failure(URLError(.cannotParseResponse)))
+//            return
+//        }
+//
+//        // Use the gas price value
+////        print("Gas price: \(gasPriceString) wei")
+//        let retVal = [String(gasPrice, radix: 16), String(gasPriceLimit, radix: 16)]
+//        completion(.success(retVal))
+//    }
+//
+//    // Start the task
+//    task.resume()
 }
 
 func signEthereumTransaction(hdwallet: HDWallet, amount:String, toAddress:String, gasPrice:String, gasLimit:String) -> String {
