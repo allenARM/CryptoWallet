@@ -126,8 +126,10 @@ struct ContentView: View {
             hdwallet = HDWallet(mnemonic: words.joined(separator: " "), passphrase: "")
             print("------------------------------------------")
             print(hdwallet.getKeyForCoin(coin: .ethereum).data.hashValue)
+            ethConnect.ethAddress = EthereumAddress(stringLiteral: hdwallet.getAddressForCoin(coin: .ethereum))
             do{
-                postEthereumTransaction(rawTx: "lol")
+                //GO TO SPECIFIC VIEW FOR ASYNC CALL OF ETH TRANSACTION
+//                postEthereumTransaction(amount: <#T##BigUInt#>, toAddress: <#T##String#>, gasPrice: <#T##BigUInt#>, gasLimit: <#T##BigUInt#>)
                 print(try ethConnect.ethKeyLocalStorage.loadPrivateKey().hashValue)
             }
             catch{
