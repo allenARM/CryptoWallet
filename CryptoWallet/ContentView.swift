@@ -65,9 +65,7 @@ struct ContentView: View {
               
                 .task {
                     do {
-                        ethConnect.blockNum = try await ethConnect.client.eth_blockNumber()
-                        ethConnect.ethBal = BigUInt(try await ethConnect.client.eth_getBalance(address: EthereumAddress(stringLiteral: "0xFe496d439E96354a5f787f95Fba1A449d1b41280"), block: EthereumBlock(rawValue: ethConnect.blockNum)))
-                        ethConnect.gasPrice = BigUInt(try await ethConnect.client.eth_gasPrice())
+                        
                         
                     }
                     catch{}

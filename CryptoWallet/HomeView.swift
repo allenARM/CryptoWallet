@@ -44,6 +44,11 @@ struct HomeView: View {
                 }
             }
         }
+        .task {
+            let words = getWords()
+            hdwallet = HDWallet(mnemonic: words.joined(separator: " "), passphrase: "")
+            print("HDWALLET CREATED")
+        }
     }
 }
 
@@ -73,6 +78,14 @@ struct EthView: View
             .fullScreenCover(isPresented: $isShowingConfirmView){
                 ConfirmView(isPresented: $isShowingConfirmView)
             }
+            .task {
+                do {
+                    ethConnect.blockNum = try await ethConnect.client.eth_blockNumber()
+                    ethConnect.ethBal = BigUInt(try await ethConnect.client.eth_getBalance(address: web3.EthereumAddress(stringLiteral: "0xFe496d439E96354a5f787f95Fba1A449d1b41280"), block: web3.EthereumBlock(rawValue: ethConnect.blockNum)))
+                    ethConnect.gasPrice = BigUInt(try await ethConnect.client.eth_gasPrice())
+                }
+                catch{}
+            }
     }
     
     
@@ -92,38 +105,29 @@ struct EthView: View
             }
         }
         getEthereumGasPrice()
-        print(ethConnect.gasPriceinGwei)
+        print("Current gas price" + String(ethConnect.gasPriceinGwei))
         
-        let words = getWords()
-        hdwallet = HDWallet(mnemonic: words.joined(separator: " "), passphrase: "")
         print("------------------------------------------")
         print(hdwallet.getKeyForCoin(coin: .ethereum).data.hashValue)
-        ethConnect.ethAddress = EthereumAddress(stringLiteral: hdwallet.getAddressForCoin(coin: .ethereum))
+        ethConnect.ethAddress = web3.EthereumAddress(stringLiteral: hdwallet.getAddressForCoin(coin: .ethereum))
         do{
             //GO TO SPECIFIC VIEW FOR ASYNC CALL OF ETH TRANSACTION
 //                postEthereumTransaction(amount: <#T##BigUInt#>, toAddress: <#T##String#>, gasPrice: <#T##BigUInt#>, gasLimit: <#T##BigUInt#>)
             let pkData = hdwallet.getKeyForCoin(coin: .ethereum)
             try ethConnect.ethKeyLocalStorage.storePrivateKey(key: pkData.data)
             print(try ethConnect.ethKeyLocalStorage.loadPrivateKey().hashValue)
+            print("ETH Account Restored")
         }
         catch{
             print("it didn't work")
         }
         print("------------------------------------------")
-//            var gasPrice1 = ""
-//            var gasPriceLimit1 = ""
-//            getEthereumGasPrice() { result in
-//                switch result {
-//                case .success(let gasPrice):
-//                    print("Gas Price: \(gasPrice[0])")
-//                    print("Gas Price Limit: \(gasPrice[1])")
-//
-//                    hdwallet = HDWallet(mnemonic: (Mnemonic().phrase).joined(separator: " "), passphrase: "")
-//                    signEthereumTransaction(hdwallet: hdwallet, amount: String(100, radix: 16), toAddress: "0x388C818CA8B9251b393131C08a736A67ccB19297", gasPrice: gasPrice[0], gasLimit: gasPrice[1])
-//                case .failure(let error):
-//                    print("Error: \(error)")
-//                }
-//            }
+        var ethT = EthTransaction()
+        ethT.gasPrice = ethConnect.gasPrice
+        ethT.amount = 1;
+        ethT.toAddress = "0x388C818CA8B9251b393131C08a736A67ccB19297"
+        ethT.gasLimit = ethT.gasPrice + 15;
+        postEthereumTransaction(ethTransaction: ethT)
     }
 }
 
@@ -141,7 +145,9 @@ struct ConfirmView: View{
             }
         }
         // run asynchronous code here
-
+        .task {
+            
+        }
     }
 }
 
