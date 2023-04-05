@@ -15,6 +15,7 @@ import Base58Swift
 import CryptoKit
 import web3
 import BigInt
+import SolanaWeb3
 
 struct HomeView: View {
     var body: some View {
@@ -165,6 +166,14 @@ struct SolView: View{
                     try_SOL()
                 }
             }
+        }
+        .task {
+            do {
+                print(hdwallet.getKeyForCoin(coin: .solana).data.hashValue)
+                solConnect.account = try SolanaWeb3.Account(secretKey: hdwallet.getKeyForCoin(coin: .solana).data)
+                print(solConnect.account.secretKey.hashValue)
+            }
+            catch{}
         }
         
     }

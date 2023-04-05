@@ -24,6 +24,7 @@
 		D9BC80EA29D51BED00697563 /* SolanaFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BC80E929D51BED00697563 /* SolanaFunctions.swift */; };
 		D9BC80EC29D51C2D00697563 /* EthereumFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BC80EB29D51C2D00697563 /* EthereumFunctions.swift */; };
 		D9BC80FE29D8145A00697563 /* web3.swift in Frameworks */ = {isa = PBXBuildFile; productRef = D9BC80FD29D8145A00697563 /* web3.swift */; };
+		D9DD46DF29DE262500DD5E77 /* SolanaWeb3 in Frameworks */ = {isa = PBXBuildFile; productRef = D9DD46DE29DE262500DD5E77 /* SolanaWeb3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				813D64C429D0E03A00E3B878 /* BIP39 in Frameworks */,
+				D9DD46DF29DE262500DD5E77 /* SolanaWeb3 in Frameworks */,
 				813D64C129D0DFEC00E3B878 /* Base58Swift in Frameworks */,
 				813D64CD29D0E0A000E3B878 /* WalletCore in Frameworks */,
 				813D64C729D0E04E00E3B878 /* CryptoSwift in Frameworks */,
@@ -158,6 +160,7 @@
 				813D64CA29D0E0A000E3B878 /* SwiftProtobuf */,
 				813D64CC29D0E0A000E3B878 /* WalletCore */,
 				D9BC80FD29D8145A00697563 /* web3.swift */,
+				D9DD46DE29DE262500DD5E77 /* SolanaWeb3 */,
 			);
 			productName = CryptoWallet;
 			productReference = 81A640EC29B5B6F400D5CFB9 /* CryptoWallet.app */;
@@ -238,6 +241,7 @@
 				813D64C829D0E06200E3B878 /* XCRemoteSwiftPackageReference "swift-crypto" */,
 				813D64C929D0E0A000E3B878 /* XCRemoteSwiftPackageReference "wallet-core" */,
 				D9BC80FC29D8145A00697563 /* XCRemoteSwiftPackageReference "web3" */,
+				D9DD46DD29DE262500DD5E77 /* XCRemoteSwiftPackageReference "solana-web3.swift" */,
 			);
 			productRefGroup = 81A640ED29B5B6F400D5CFB9 /* Products */;
 			projectDirPath = "";
@@ -665,6 +669,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		D9DD46DD29DE262500DD5E77 /* XCRemoteSwiftPackageReference "solana-web3.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/portto/solana-web3.swift.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -697,6 +709,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D9BC80FC29D8145A00697563 /* XCRemoteSwiftPackageReference "web3" */;
 			productName = web3.swift;
+		};
+		D9DD46DE29DE262500DD5E77 /* SolanaWeb3 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9DD46DD29DE262500DD5E77 /* XCRemoteSwiftPackageReference "solana-web3.swift" */;
+			productName = SolanaWeb3;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

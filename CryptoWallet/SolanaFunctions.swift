@@ -9,6 +9,20 @@ import Foundation
 import CryptoSwift
 import WalletCore
 import BigInt
+import SolanaWeb3
+
+public struct SolanaConnect {
+//    var client!
+    var blockNum: BigUInt!
+    var solBal: BigUInt!
+    var solBalNormilized: Int64!
+    var feePrice: BigUInt!
+    var solAddress: String!
+    var account: SolanaWeb3.Account!
+}
+
+public var solConnect = SolanaConnect()
+
 
 public func checkSOLBalance(for address: String, completionHandler: @escaping (Result<Double, Error>) -> Void) {
     let url = URL(string: "https://api.mainnet-beta.solana.com")!
