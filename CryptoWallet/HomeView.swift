@@ -48,8 +48,10 @@ struct HomeView: View {
         .task {
             do {
                 //Create account
-                let words = getWords()
-                hdwallet = HDWallet(mnemonic: words.joined(separator: " "), passphrase: "")
+//                let words = getWords()
+//                hdwallet = HDWallet(mnemonic: words.joined(separator: " "), passphrase: "")
+                let words = "today unfold raise orphan section talent rotate abuse throw entire media square"
+                hdwallet = HDWallet(mnemonic: words, passphrase: "")
                 print("HDWALLET CREATED")
             }
             catch{
@@ -100,7 +102,7 @@ struct EthView: View
                 isLoading = true
                 do {
                     ethConnect.blockNum = try await ethConnect.client.eth_blockNumber()
-                    ethConnect.ethBal = BigUInt(try await ethConnect.client.eth_getBalance(address: web3.EthereumAddress(stringLiteral: "0xFe496d439E96354a5f787f95Fba1A449d1b41280"), block: web3.EthereumBlock(rawValue: ethConnect.blockNum)))
+                    ethConnect.ethBal = BigUInt(try await ethConnect.client.eth_getBalance(address: web3.EthereumAddress(stringLiteral: hdwallet.getAddressForCoin(coin: .ethereum)), block: web3.EthereumBlock(rawValue: ethConnect.blockNum)))
                     await checkETHBalance(for: hdwallet.getAddressForCoin(coin: .ethereum))
                     ethConnect.gasPrice = BigUInt(try await ethConnect.client.eth_gasPrice())
                 }
