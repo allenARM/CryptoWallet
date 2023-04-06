@@ -46,29 +46,51 @@ struct HomeView: View {
             }
         }
         .task {
-            let words = getWords()
-            hdwallet = HDWallet(mnemonic: words.joined(separator: " "), passphrase: "")
-            print("HDWALLET CREATED")
+            do {
+                //Create account
+                let words = getWords()
+                hdwallet = HDWallet(mnemonic: words.joined(separator: " "), passphrase: "")
+                print("HDWALLET CREATED")
+                
+                //Check BTC balance
+                checkBTCBalance(address: hdwallet.getAddressForCoin(coin: .bitcoin))
+
+               
+            }
+            catch{
+                print("Error in homeview")
+            }
         }
     }
 }
 
 struct EthView: View
 {
+    @State private var isLoading: Bool!
     @State private var isShowingConfirmView = false
     
     var body: some View
     {
-            ZStack{
-                bgColor
-                    .ignoresSafeArea(.all)
+        ZStack{
+            bgColor
+                .ignoresSafeArea(.all)
                 VStack
                 {
+                    if (isLoading == true) {
+                        ProgressView()
+                    }
+                    else if (isLoading == false) {
+                        Text("Balance: " + String(ethConnect.ethBalNormilized!))
+                            .font(.title3)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Capsule().foregroundColor(.blue))
+                    }
                     Button("Try ETH") { try_ETH() }
                         .padding()
                     
-                   
-                        Button("Send")
+                    
+                    Button("Send")
                     {
                         confirmEth()
                     }
@@ -80,12 +102,15 @@ struct EthView: View
                 ConfirmView(isPresented: $isShowingConfirmView)
             }
             .task {
+                isLoading = true
                 do {
                     ethConnect.blockNum = try await ethConnect.client.eth_blockNumber()
                     ethConnect.ethBal = BigUInt(try await ethConnect.client.eth_getBalance(address: web3.EthereumAddress(stringLiteral: "0xFe496d439E96354a5f787f95Fba1A449d1b41280"), block: web3.EthereumBlock(rawValue: ethConnect.blockNum)))
+                    await checkETHBalance(for: hdwallet.getAddressForCoin(coin: .ethereum))
                     ethConnect.gasPrice = BigUInt(try await ethConnect.client.eth_gasPrice())
                 }
                 catch{}
+                isLoading = false
             }
     }
     
@@ -97,14 +122,6 @@ struct EthView: View
     }
     
     func try_ETH(){
-        checkETHBalance(for: "0x388C818CA8B9251b393131C08a736A67ccB19297") { result in
-            switch result {
-            case .success(let balance):
-                print("Balance: \(balance) ETH")
-            case .failure(let error):
-                print("Error: \(error)")
-            }
-        }
         getEthereumGasPrice()
         print("Current gas price" + String(ethConnect.gasPriceinGwei))
         
@@ -154,6 +171,7 @@ struct ConfirmView: View{
 
 
 struct SolView: View{
+    @State private var isLoading: Bool!
     
     var body: some View
     {
@@ -161,6 +179,16 @@ struct SolView: View{
             bgColor
                 .ignoresSafeArea(.all)
             VStack{
+                if (isLoading == true){
+                    ProgressView()
+                }
+                else if (isLoading == false){
+                    Text("Balance: " + String(solConnect.solBal))
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Capsule().foregroundColor(.blue))
+                }
                 Button("Try Sol")
                 {
                     try_SOL()
@@ -168,37 +196,45 @@ struct SolView: View{
             }
         }
         .task {
+            isLoading = true
             do {
                 solConnect.account = try SolanaWeb3.Account(secretKey: hdwallet.getKeyForCoin(coin: .solana).data, publicKey: hdwallet.getKeyForCoin(coin: .solana).getPublicKey(coinType: .solana).data)
-                
+
                 if (solConnect.account.publicKey.base58 == hdwallet.getAddressForCoin(coin: .solana)) {
                     print("Solana account restored")
                 }
+                solConnect.client.getBalance(publicKey: solConnect.account.publicKey) {result in switch result{
+                case .success(let balance):
+                    solConnect.solBal = balance
+                    print(solConnect.solBal!)
+                case .failure(let error):
+                    print(error)
+                }}
+                try await Task.sleep(nanoseconds: 2000000000)
             }
             catch{}
+            isLoading = false
         }
         
     }
     
     func try_SOL()
     {
-        checkSOLBalance(for: "aoyuUEidmY4gqkw42UAs8N3QpJpD4KLXnSWYhPSE8bB") { result in
-            switch result {
-            case .success(let balance):
-                print("Balance: \(balance) SOL")
-            case .failure(let error):
-                print("Error: \(error)")
-            }
-        }
-//            let words = getWords()
-//            hdwallet = HDWallet(mnemonic: words.joined(separator: " "), passphrase: "")
-        print(hdwallet.getKeyForCoin(coin: .solana).data.hashValue)
-        
-//            let sol = Solana(network: .main)
-//            print(signSolanaTransaction(hdwallet: hdwallet, amount: 50, toAddress: "StringaoyuUEidmY4gqkw42UAs8N3QpJpD4KLXnSWYhPSE8bB"))
-                    
-//
-        
+//        checkSOLBalance(for: "aoyuUEidmY4gqkw42UAs8N3QpJpD4KLXnSWYhPSE8bB") { result in
+//            switch result {
+//            case .success(let balance):
+//                print("Balance: \(balance) SOL")
+//            case .failure(let error):
+//                print("Error: \(error)")
+//            }
+//        }
+//        SolanaWeb3.Transaction(data: <#T##Data#>)
+//        solConnect.client.sendTransaction(transaction: <#T##Transaction#>, signers: <#T##[Signer]#>) { result in switch result{
+//        case .success(let tx):
+//            print("success")
+//        case .failure(let error):
+//            print(error)
+//        }}
     }
 }
 
@@ -211,12 +247,21 @@ struct BtcView: View{
                 .ignoresSafeArea()
             
             VStack{
+                
+                Text("Balance: " + String(btcConnect.btcBal))
+                    .font(.title3)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Capsule().foregroundColor(.blue))
                 Button("Try SignBTCTransaction")
                 {
                     try_BTCTransaction()
                     
                 }
             }
+        }
+        .task {
+            checkBTCBalance(address: hdwallet.getAddressForCoin(coin: .bitcoin))
         }
     }
     

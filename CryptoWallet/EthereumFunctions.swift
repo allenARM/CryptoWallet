@@ -31,7 +31,7 @@ public struct EthTransaction {
     var gasLimit: BigUInt!
 }
 
-public func checkETHBalance(for address: String, completionHandler: @escaping (Result<Double, Error>) -> Void) {
+public func checkETHBalance(for address: String) async {
     let divisor = BigUInt(10).power(13)
     let finalEthBal = (ethConnect.ethBal)/divisor
     var floatValue:Double!
@@ -43,12 +43,14 @@ public func checkETHBalance(for address: String, completionHandler: @escaping (R
     {
         floatValue = Double(finalEthBal.description)!/pow(10.0, 5.0)
     }
+    print("BALANCE ETH")
+    print(floatValue)
     if (floatValue > 0){
-        completionHandler(.success(floatValue));
+//        completionHandler(.success(floatValue));
         ethConnect.ethBalNormilized = floatValue
     }
     else{
-        completionHandler(.success(0));
+//        completionHandler(.success(0));
         ethConnect.ethBalNormilized = floatValue
     }
 }

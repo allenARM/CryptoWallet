@@ -10,7 +10,14 @@ import CryptoSwift
 import WalletCore
 import BigInt
 
-public func checkBTCBalance(address: String, completion: @escaping (Double?) -> ()) {
+public struct BitcoinConnect{
+    var btcBal: Double!
+    var btcAddress: String!
+}
+
+public var btcConnect = BitcoinConnect()
+
+public func checkBTCBalance(address: String) {
     let url = URL(string: "https://blockstream.info/api/address/\(address)")!
 //    let url = URL(string: "https://blockstream.info/testnet/api/address/muGuqWmcHpjmB2rBpdbTnCwD18wnrWCjBB")!
     
@@ -21,11 +28,15 @@ public func checkBTCBalance(address: String, completion: @escaping (Double?) -> 
                     let test = json["chain_stats"] as? [String:Any]
                     let balance = (test?["funded_txo_sum"] as! Double) - (test?["spent_txo_sum"] as! Double)
                     if (balance != nil) {
+                        print("HELLO")
                         let Finalbalance = balance/100000000
-                        completion(Finalbalance)
+                        btcConnect.btcBal = Finalbalance
+                        if (balance == 0){
+                            btcConnect.btcBal = 0.0
+                        }
                     }
                     else {
-                        completion(0)
+                        print("error")
                     }
                 }
             }

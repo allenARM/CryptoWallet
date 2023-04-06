@@ -12,7 +12,7 @@ import BigInt
 import SolanaWeb3
 
 public struct SolanaConnect {
-//    var client!
+    var client = Connection(cluster: .mainnetBeta)
     var blockNum: UInt64!
     var solBal: UInt64!
     var solBalNormilized: Int64!
