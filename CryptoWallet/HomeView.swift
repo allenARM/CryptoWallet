@@ -51,11 +51,6 @@ struct HomeView: View {
                 let words = getWords()
                 hdwallet = HDWallet(mnemonic: words.joined(separator: " "), passphrase: "")
                 print("HDWALLET CREATED")
-                
-                //Check BTC balance
-                checkBTCBalance(address: hdwallet.getAddressForCoin(coin: .bitcoin))
-
-               
             }
             catch{
                 print("Error in homeview")
@@ -183,7 +178,7 @@ struct SolView: View{
                     ProgressView()
                 }
                 else if (isLoading == false){
-                    Text("Balance: " + String(solConnect.solBal))
+                    Text("Balance: " + String(solConnect.solBal ?? 987654321))
                         .font(.title3)
                         .foregroundColor(.white)
                         .padding()
@@ -206,7 +201,6 @@ struct SolView: View{
                 solConnect.client.getBalance(publicKey: solConnect.account.publicKey) {result in switch result{
                 case .success(let balance):
                     solConnect.solBal = balance
-                    print(solConnect.solBal!)
                 case .failure(let error):
                     print(error)
                 }}
@@ -239,6 +233,7 @@ struct SolView: View{
 }
 
 struct BtcView: View{
+    @State private var isLoading: Bool!
     
     var body: some View{
         
@@ -247,21 +242,30 @@ struct BtcView: View{
                 .ignoresSafeArea()
             
             VStack{
-                
-                Text("Balance: " + String(btcConnect.btcBal))
-                    .font(.title3)
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Capsule().foregroundColor(.blue))
+                if (isLoading == true){
+                    ProgressView()
+                }
+                else if (isLoading == false) {
+                    Text("Balance: " + String(btcConnect.btcBal))
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Capsule().foregroundColor(.blue))
+                }
                 Button("Try SignBTCTransaction")
                 {
                     try_BTCTransaction()
-                    
                 }
             }
         }
         .task {
-            checkBTCBalance(address: hdwallet.getAddressForCoin(coin: .bitcoin))
+            do {
+                isLoading = true
+                checkBTCBalance(address: hdwallet.getAddressForCoin(coin: .bitcoin))
+                try await Task.sleep(nanoseconds: 2000000000)
+                isLoading = false
+            }
+            catch {}
         }
     }
     

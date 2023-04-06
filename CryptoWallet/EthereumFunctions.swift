@@ -43,8 +43,6 @@ public func checkETHBalance(for address: String) async {
     {
         floatValue = Double(finalEthBal.description)!/pow(10.0, 5.0)
     }
-    print("BALANCE ETH")
-    print(floatValue)
     if (floatValue > 0){
 //        completionHandler(.success(floatValue));
         ethConnect.ethBalNormilized = floatValue
