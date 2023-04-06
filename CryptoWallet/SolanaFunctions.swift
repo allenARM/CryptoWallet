@@ -13,10 +13,10 @@ import SolanaWeb3
 
 public struct SolanaConnect {
 //    var client!
-    var blockNum: BigUInt!
-    var solBal: BigUInt!
+    var blockNum: UInt64!
+    var solBal: UInt64!
     var solBalNormilized: Int64!
-    var feePrice: BigUInt!
+    var feePrice: UInt64!
     var solAddress: String!
     var account: SolanaWeb3.Account!
 }

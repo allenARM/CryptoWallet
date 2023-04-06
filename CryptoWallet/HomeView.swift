@@ -169,9 +169,11 @@ struct SolView: View{
         }
         .task {
             do {
-                print(hdwallet.getKeyForCoin(coin: .solana).data.hashValue)
-                solConnect.account = try SolanaWeb3.Account(secretKey: hdwallet.getKeyForCoin(coin: .solana).data)
-                print(solConnect.account.secretKey.hashValue)
+                solConnect.account = try SolanaWeb3.Account(secretKey: hdwallet.getKeyForCoin(coin: .solana).data, publicKey: hdwallet.getKeyForCoin(coin: .solana).getPublicKey(coinType: .solana).data)
+                
+                if (solConnect.account.publicKey.base58 == hdwallet.getAddressForCoin(coin: .solana)) {
+                    print("Solana account restored")
+                }
             }
             catch{}
         }
