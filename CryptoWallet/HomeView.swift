@@ -92,6 +92,11 @@ struct EthView: View
                         confirmEth()
                     }
                     .padding()
+                    Text(hdwallet.getAddressForCoin(coin: .ethereum))
+                        .font(.footnote)
+                        .padding(.all)
+                        .foregroundColor(.white)
+                        .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 20)).foregroundColor(.gray))
                     
                 }
             }
@@ -190,6 +195,11 @@ struct SolView: View{
                 {
                     try_SOL()
                 }
+                Text(hdwallet.getAddressForCoin(coin: .solana))
+                    .font(.footnote)
+                    .padding(.all)
+                    .foregroundColor(.white)
+                    .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 20)).foregroundColor(.gray))
             }
         }
         .task {
@@ -245,6 +255,11 @@ struct BtcView: View{
                 {
                     try_BTCTransaction()
                 }
+                Text(hdwallet.getAddressForCoin(coin: .bitcoin))
+                    .font(.footnote)
+                    .padding(.all)
+                    .foregroundColor(.white)
+                    .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 20)).foregroundColor(.gray))
             }
         }
         .task {
