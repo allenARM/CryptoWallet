@@ -92,3 +92,36 @@ func signSolanaTransaction(hdwallet: HDWallet, amount:UInt64, toAddress:String) 
 func postSolanaTransaction(rawTx:String, completion: @escaping(Result<String,Error>) -> Void) {
     
 }
+
+
+func sendSolTransaction(toAddress: String, Amount: UInt64) {
+    struct TransactionInformation{
+        var recentBlockHash: SolanaWeb3.Blockhash!
+        var nonceInformation: SolanaWeb3.NonceInformation!
+        var feePayer: SolanaWeb3.PublicKey!
+        var signatures: [SolanaWeb3.SignaturePubkeyPair]!
+    }
+    
+    var txInfo = TransactionInformation()
+    
+    do {
+        let instructions = try SolanaWeb3.SystemProgram.transfer(fromPublicKey: solConnect.account.publicKey, toPublicKey: SolanaWeb3.PublicKey(toAddress), lamports: Amount)
+        
+        solConnect.client.getLatestBlockhash() {result in switch result {
+        case .success(let blockHash):
+            txInfo.recentBlockHash = blockHash.blockhash
+        case .failure(let error):
+            print(error)
+        }}
+        txInfo.feePayer = solConnect.account.publicKey
+        var txToSend = SolanaWeb3.Transaction(recentBlockhash: txInfo.recentBlockHash)
+        txToSend.instructions.append(instructions)
+        solConnect.client.sendTransaction(transaction: txToSend, signers: [solConnect.account]) {result in switch result {
+        case .success(let retVal):
+            print(retVal)
+        case .failure(let error):
+            print(error)
+        }}
+    }
+    catch{}
+}

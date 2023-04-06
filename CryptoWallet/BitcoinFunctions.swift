@@ -28,7 +28,6 @@ public func checkBTCBalance(address: String) {
                     let test = json["chain_stats"] as? [String:Any]
                     let balance = (test?["funded_txo_sum"] as! Double) - (test?["spent_txo_sum"] as! Double)
                     if (balance != nil) {
-                        print("HELLO")
                         let Finalbalance = balance/100000000
                         btcConnect.btcBal = Finalbalance
                         if (balance == 0){

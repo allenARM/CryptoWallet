@@ -216,21 +216,8 @@ struct SolView: View{
     
     func try_SOL()
     {
-//        checkSOLBalance(for: "aoyuUEidmY4gqkw42UAs8N3QpJpD4KLXnSWYhPSE8bB") { result in
-//            switch result {
-//            case .success(let balance):
-//                print("Balance: \(balance) SOL")
-//            case .failure(let error):
-//                print("Error: \(error)")
-//            }
-//        }
-//        SolanaWeb3.Transaction(data: <#T##Data#>)
-//        solConnect.client.sendTransaction(transaction: <#T##Transaction#>, signers: <#T##[Signer]#>) { result in switch result{
-//        case .success(let tx):
-//            print("success")
-//        case .failure(let error):
-//            print(error)
-//        }}
+        
+
     }
 }
 
@@ -263,7 +250,8 @@ struct BtcView: View{
         .task {
             do {
                 isLoading = true
-                checkBTCBalance(address: hdwallet.getAddressForCoin(coin: .bitcoin))
+//                checkBTCBalance(address: hdwallet.getAddressForCoin(coin: .bitcoin))
+                checkBTCBalance(address: "3GYjC1igp6ySPoUJQTXNri75FR5MrVmuiC")
                 try await Task.sleep(nanoseconds: 2000000000)
                 isLoading = false
             }
