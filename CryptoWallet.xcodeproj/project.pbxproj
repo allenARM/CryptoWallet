@@ -21,6 +21,9 @@
 		81A640F429B5B6F500D5CFB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A640F329B5B6F500D5CFB9 /* Assets.xcassets */; };
 		81A640F729B5B6F500D5CFB9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A640F629B5B6F500D5CFB9 /* Preview Assets.xcassets */; };
 		81A6411A29B5B78800D5CFB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A6411929B5B78800D5CFB9 /* SceneDelegate.swift */; };
+		D97F071E29E099A4005D1EE9 /* EthereumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97F071D29E099A4005D1EE9 /* EthereumView.swift */; };
+		D97F072029E09A08005D1EE9 /* SolanaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97F071F29E09A08005D1EE9 /* SolanaView.swift */; };
+		D97F072229E09AAB005D1EE9 /* BitcoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97F072129E09AAB005D1EE9 /* BitcoinView.swift */; };
 		D9BC80EA29D51BED00697563 /* SolanaFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BC80E929D51BED00697563 /* SolanaFunctions.swift */; };
 		D9BC80EC29D51C2D00697563 /* EthereumFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BC80EB29D51C2D00697563 /* EthereumFunctions.swift */; };
 		D9BC80FE29D8145A00697563 /* web3.swift in Frameworks */ = {isa = PBXBuildFile; productRef = D9BC80FD29D8145A00697563 /* web3.swift */; };
@@ -57,6 +60,9 @@
 		81A640FC29B5B6F500D5CFB9 /* CryptoWalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CryptoWalletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		81A6410629B5B6F500D5CFB9 /* CryptoWalletUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CryptoWalletUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		81A6411929B5B78800D5CFB9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		D97F071D29E099A4005D1EE9 /* EthereumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumView.swift; sourceTree = "<group>"; };
+		D97F071F29E09A08005D1EE9 /* SolanaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaView.swift; sourceTree = "<group>"; };
+		D97F072129E09AAB005D1EE9 /* BitcoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinView.swift; sourceTree = "<group>"; };
 		D9BC80E929D51BED00697563 /* SolanaFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaFunctions.swift; sourceTree = "<group>"; };
 		D9BC80EB29D51C2D00697563 /* EthereumFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumFunctions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -114,17 +120,13 @@
 		81A640EE29B5B6F400D5CFB9 /* CryptoWallet */ = {
 			isa = PBXGroup;
 			children = (
+				D97F072529E09B56005D1EE9 /* Utils */,
+				D97F072429E09B33005D1EE9 /* CoinFunctions */,
+				D97F072329E09B0D005D1EE9 /* Views */,
 				81A640EF29B5B6F400D5CFB9 /* CryptoWalletApp.swift */,
 				81A6411929B5B78800D5CFB9 /* SceneDelegate.swift */,
-				81A640F129B5B6F400D5CFB9 /* ContentView.swift */,
-				813D64BD29D0254400E3B878 /* HomeView.swift */,
 				81A640F329B5B6F500D5CFB9 /* Assets.xcassets */,
-				813D64D029D0E14B00E3B878 /* BitcoinFunctions.swift */,
-				D9BC80E929D51BED00697563 /* SolanaFunctions.swift */,
 				81A640F529B5B6F500D5CFB9 /* Preview Content */,
-				813D64CE29D0E12400E3B878 /* Utils.swift */,
-				813D64D229D0E17100E3B878 /* BIP39.swift */,
-				D9BC80EB29D51C2D00697563 /* EthereumFunctions.swift */,
 			);
 			path = CryptoWallet;
 			sourceTree = "<group>";
@@ -135,6 +137,37 @@
 				81A640F629B5B6F500D5CFB9 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D97F072329E09B0D005D1EE9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				813D64BD29D0254400E3B878 /* HomeView.swift */,
+				81A640F129B5B6F400D5CFB9 /* ContentView.swift */,
+				D97F071D29E099A4005D1EE9 /* EthereumView.swift */,
+				D97F071F29E09A08005D1EE9 /* SolanaView.swift */,
+				D97F072129E09AAB005D1EE9 /* BitcoinView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D97F072429E09B33005D1EE9 /* CoinFunctions */ = {
+			isa = PBXGroup;
+			children = (
+				813D64D029D0E14B00E3B878 /* BitcoinFunctions.swift */,
+				D9BC80E929D51BED00697563 /* SolanaFunctions.swift */,
+				D9BC80EB29D51C2D00697563 /* EthereumFunctions.swift */,
+			);
+			path = CoinFunctions;
+			sourceTree = "<group>";
+		};
+		D97F072529E09B56005D1EE9 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				813D64CE29D0E12400E3B878 /* Utils.swift */,
+				813D64D229D0E17100E3B878 /* BIP39.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,6 +325,9 @@
 				813D64BE29D0254400E3B878 /* HomeView.swift in Sources */,
 				81A640F029B5B6F400D5CFB9 /* CryptoWalletApp.swift in Sources */,
 				813D64D329D0E17100E3B878 /* BIP39.swift in Sources */,
+				D97F072229E09AAB005D1EE9 /* BitcoinView.swift in Sources */,
+				D97F071E29E099A4005D1EE9 /* EthereumView.swift in Sources */,
+				D97F072029E09A08005D1EE9 /* SolanaView.swift in Sources */,
 				81A6411A29B5B78800D5CFB9 /* SceneDelegate.swift in Sources */,
 				D9BC80EA29D51BED00697563 /* SolanaFunctions.swift in Sources */,
 			);
