@@ -64,13 +64,13 @@ struct HomeView: View {
 struct EthView: View
 {
     @State private var isLoading: Bool!
-    @State private var isShowingConfirmView = false
     
     var body: some View
     {
-        ZStack{
-            bgColor
-                .ignoresSafeArea(.all)
+        NavigationView {
+            ZStack{
+                bgColor
+                    .ignoresSafeArea(.all)
                 VStack
                 {
                     if (isLoading == true) {
@@ -86,23 +86,24 @@ struct EthView: View
                     Button("Try ETH") { try_ETH() }
                         .padding()
                     
-                    
-                    Button("Send")
-                    {
-                        confirmEth()
+                    NavigationLink(destination: EthSend()) {
+                        Text("Send Ethereum")
                     }
-                    .padding()
-                    Text(hdwallet.getAddressForCoin(coin: .ethereum))
+                    
+                    let coinAddress = hdwallet.getAddressForCoin(coin: .ethereum)
+                    Text(coinAddress)
                         .font(.footnote)
                         .padding(.all)
                         .foregroundColor(.white)
                         .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 20)).foregroundColor(.gray))
+                        .disabled(false)
+                    Button("Copy") {
+                        UIPasteboard.general.string = coinAddress
+                    }
                     
                 }
             }
-            .fullScreenCover(isPresented: $isShowingConfirmView){
-                ConfirmView(isPresented: $isShowingConfirmView)
-            }
+        }
             .task {
                 isLoading = true
                 do {
@@ -114,13 +115,6 @@ struct EthView: View
                 catch{}
                 isLoading = false
             }
-    }
-    
-    
-    //maybe create ENUM type for different confirm views
-    func confirmEth()
-    {
-        isShowingConfirmView = true
     }
     
     func try_ETH(){
@@ -142,12 +136,59 @@ struct EthView: View
             print("it didn't work")
         }
         print("------------------------------------------")
-        var ethT = EthTransaction()
-        ethT.gasPrice = ethConnect.gasPrice
-        ethT.amount = 1;
-        ethT.toAddress = "0x388C818CA8B9251b393131C08a736A67ccB19297"
-        ethT.gasLimit = ethT.gasPrice + 15;
-        postEthereumTransaction(ethTransaction: ethT)
+        
+    }
+}
+
+struct EthSend: View {
+    @State var ethT = EthTransaction()
+    
+    @State private var amount: String = ""
+    @State private var recipientAddress: String = ""
+    @State private var isShowingConfirmView = false
+    
+    var body: some View{
+        ZStack{
+            bgColor
+                .ignoresSafeArea(.all)
+            VStack{
+                Text("Balance: " + String(ethConnect.ethBalNormilized!))
+                    .font(.title3)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Rectangle().foregroundColor(.blue))
+                TextField("Amount", text: $amount) {
+                    ethT.amount = BigUInt(stringLiteral: amount) * BigUInt(10).power(18)
+                }
+                .padding()
+                .foregroundColor(.blue)
+                TextField("Recipient Address", text: $recipientAddress) {
+                    ethT.toAddress = recipientAddress
+                }
+                .padding()
+                .foregroundColor(.blue)
+                Button("Send")
+                {
+                    postEthereumTransaction(ethTransaction: ethT)
+                    confirmEth()
+                }
+                .padding()
+                .foregroundColor(.blue)
+            }
+        }
+        .fullScreenCover(isPresented: $isShowingConfirmView){
+            ConfirmView(isPresented: $isShowingConfirmView)
+        }
+        // run asynchronous code here
+        .task {
+            ethT.gasPrice = ethConnect.gasPrice
+            ethT.gasLimit = ethT.gasPrice + 15;
+        }
+    }
+    //maybe create ENUM type for different confirm views
+    func confirmEth()
+    {
+        isShowingConfirmView = true
     }
 }
 
@@ -195,11 +236,16 @@ struct SolView: View{
                 {
                     try_SOL()
                 }
-                Text(hdwallet.getAddressForCoin(coin: .solana))
+                let coinAddress = hdwallet.getAddressForCoin(coin: .solana)
+                Text(coinAddress)
                     .font(.footnote)
                     .padding(.all)
                     .foregroundColor(.white)
                     .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 20)).foregroundColor(.gray))
+                    .disabled(false)
+                Button("Copy") {
+                    UIPasteboard.general.string = coinAddress
+                }
             }
         }
         .task {
@@ -255,11 +301,16 @@ struct BtcView: View{
                 {
                     try_BTCTransaction()
                 }
-                Text(hdwallet.getAddressForCoin(coin: .bitcoin))
+                let coinAddress = hdwallet.getAddressForCoin(coin: .bitcoin)
+                Text(coinAddress)
                     .font(.footnote)
                     .padding(.all)
                     .foregroundColor(.white)
                     .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 20)).foregroundColor(.gray))
+                    .disabled(false)
+                Button("Copy") {
+                    UIPasteboard.general.string = coinAddress
+                }
             }
         }
         .task {
