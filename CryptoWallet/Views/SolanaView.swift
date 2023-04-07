@@ -22,7 +22,7 @@ public struct SolView: View{
                     ProgressView()
                 }
                 else if (isLoading == false){
-                    Text("Balance: " + String(solConnect.solBal ?? 987654321))
+                    Text("Balance: " + String(solConnect.solBalNormilized ?? 987654321))
                         .font(.title3)
                         .foregroundColor(.white)
                         .padding()
@@ -59,6 +59,7 @@ public struct SolView: View{
                     print(error)
                 }}
                 try await Task.sleep(nanoseconds: 2000000000)
+                checkSOLBalance()
             }
             catch{}
             isLoading = false

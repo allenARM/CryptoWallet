@@ -32,26 +32,8 @@ public struct EthTransaction {
 }
 
 public func checkETHBalance(for address: String) async {
-//    let divisor = BigUInt(10).power(13)
     let doubleBal = Double(ethConnect.ethBal)/pow(10.0, 18.0)
-//    let finalEthBal = (ethConnect.ethBal)/divisor
-//    var floatValue:Double!
-//    if (finalEthBal.description.count < 6)
-//    {
-//        floatValue = Double("0." + finalEthBal.description)
-//    }
-//    else
-//    {
-//        floatValue = Double(finalEthBal.description)!/pow(10.0, 5.0)
-//    }
-//    if (floatValue > 0){
-//        completionHandler(.success(floatValue));
-//        ethConnect.ethBalNormilized = doubleBal
-//    }
-//    else{
-//        completionHandler(.success(0));
-        ethConnect.ethBalNormilized = doubleBal
-//    }
+    ethConnect.ethBalNormilized = doubleBal
 }
 
 func getEthereumGasPrice() {
