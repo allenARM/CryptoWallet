@@ -28,12 +28,13 @@ struct ContentView: View {
                 bgColor
                     .ignoresSafeArea(.all)
                 VStack(spacing: 20) {
-                    
-                    Image(systemName: "person.fill")
+                    Spacer()
+                    Image("Logo")
                         .resizable()
-                        .frame(width: 50, height: 50)
+                        .frame(width: 150, height: 150)
                         .padding()
                     
+                    Spacer()
                     
                     NavigationLink(destination: LoginView()){
                         Text("Login to existing wallet")
@@ -60,6 +61,8 @@ struct ContentView: View {
                     {
                         Text("Go to homeview (Login Test)")
                     }
+                    .padding(.bottom, 25.0)
+                    
                     
                 }
               
