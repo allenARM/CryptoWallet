@@ -8,6 +8,7 @@
 import SwiftUI
 import Foundation
 import SolanaWeb3
+import BigInt
 
 public struct SolView: View{
     @State private var isLoading: Bool!
@@ -28,10 +29,16 @@ public struct SolView: View{
                         .padding()
                         .background(Capsule().foregroundColor(.blue))
                 }
+                
                 Button("Try Sol")
                 {
                     try_SOL()
                 }
+                
+                NavigationLink(destination: SolSend()) {
+                    Text("Send Solana")
+                }
+                
                 let coinAddress = hdwallet.getAddressForCoin(coin: .solana)
                 Text(coinAddress)
                     .font(.footnote)
@@ -71,5 +78,55 @@ public struct SolView: View{
     {
         
 
+    }
+}
+
+struct SolSend: View {
+    @State private var amount: String = ""
+    @State private var recipientAddress: String = ""
+    @State private var isShowingConfirmView = false
+    
+    var body: some View{
+        ZStack{
+            bgColor
+                .ignoresSafeArea(.all)
+            VStack{
+                Text("Balance: " + String(solConnect.solBalNormilized!))
+                    .font(.title3)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Rectangle().foregroundColor(.blue))
+                
+                TextField("Amount", text: $amount)
+                .padding()
+                .foregroundColor(.blue)
+                
+                Text("Double var: \((Double(amount) ?? 0) * pow(10, 9))")
+                Text("Double var: \(UInt64((Double(amount) ?? 0) * pow(10, 9)))")
+                
+                TextField("Recipient Address", text: $recipientAddress)
+                .padding()
+                .foregroundColor(.blue)
+                Button("Send")
+                {
+                    sendSolTransaction(toAddress: recipientAddress, Amount: UInt64((Double(amount) ?? 0) * pow(10, 9)))
+                    confirmSol()
+                }
+                .padding()
+                .foregroundColor(.blue)
+            }
+        }
+        .fullScreenCover(isPresented: $isShowingConfirmView){
+            ConfirmView(isPresented: $isShowingConfirmView)
+        }
+        // run asynchronous code here
+        .task {
+            
+        }
+    }
+    //maybe create ENUM type for different confirm views
+    func confirmSol()
+    {
+        isShowingConfirmView = true
     }
 }

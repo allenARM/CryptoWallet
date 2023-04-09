@@ -44,8 +44,8 @@ func getEthereumGasPrice() {
 func prepareTransaction(amount:BigUInt, toAddress:String) -> EthTransaction {
     var ethT = EthTransaction()
     ethT.gasPrice = ethConnect.gasPrice
-    ethT.gasLimit = ethT.gasPrice + 1000000
-    ethT.amount = amount * BigUInt(10).power(13)
+    ethT.gasLimit = BigUInt(Double(ethT.gasPrice) * 1.5)
+    ethT.amount = amount * BigUInt(10).power(18)
     ethT.toAddress = toAddress
     return ethT
 }

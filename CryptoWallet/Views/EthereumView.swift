@@ -60,6 +60,7 @@ public struct EthView: View
                     ethConnect.ethBal = BigUInt(try await ethConnect.client.eth_getBalance(address: web3.EthereumAddress(stringLiteral: hdwallet.getAddressForCoin(coin: .ethereum)), block: web3.EthereumBlock(rawValue: ethConnect.blockNum)))
                     await checkETHBalance(for: hdwallet.getAddressForCoin(coin: .ethereum))
                     ethConnect.gasPrice = BigUInt(try await ethConnect.client.eth_gasPrice())
+                    getEthereumGasPrice()
                 }
                 catch{}
                 isLoading = false
@@ -67,25 +68,7 @@ public struct EthView: View
     }
     
     func try_ETH(){
-        getEthereumGasPrice()
-        print("Current gas price" + String(ethConnect.gasPriceinGwei))
-        
-        print("------------------------------------------")
-        print(hdwallet.getKeyForCoin(coin: .ethereum).data.hashValue)
-        ethConnect.ethAddress = web3.EthereumAddress(stringLiteral: hdwallet.getAddressForCoin(coin: .ethereum))
-        do{
-            //GO TO SPECIFIC VIEW FOR ASYNC CALL OF ETH TRANSACTION
-//                postEthereumTransaction(amount: <#T##BigUInt#>, toAddress: <#T##String#>, gasPrice: <#T##BigUInt#>, gasLimit: <#T##BigUInt#>)
-            let pkData = hdwallet.getKeyForCoin(coin: .ethereum)
-            try ethConnect.ethKeyLocalStorage.storePrivateKey(key: pkData.data)
-            print(try ethConnect.ethKeyLocalStorage.loadPrivateKey().hashValue)
-            print("ETH Account Restored")
-        }
-        catch{
-            print("it didn't work")
-        }
-        print("------------------------------------------")
-        
+        print("Does nothing ETH is working!")
     }
 }
 

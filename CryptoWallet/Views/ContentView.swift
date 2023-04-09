@@ -129,24 +129,6 @@ struct ContentView: View {
             
             hdwallet = getWallet(words: words)
             HomeView()
-
-//            let btcAddress = hdwallet.getAddressForCoin(coin: .bitcoin)
-//            print("BTC: " + btcAddress)
-            let ethAddress = hdwallet.getAddressForCoin(coin: .ethereum)
-            print("ETH: " + ethAddress)
-//            let solAddress = hdwallet.getAddressForCoin(coin: .solana)
-//            print("SOL: " + solAddress)
-//
-//            checkBTCBalance(address: btcAddress) { balance in
-//                print("BTC Balance: \(balance ?? 0)")
-//            }
-//
-//            getLatestTransactionHashForBTCAddress(address: btcAddress) {
-//                txid, index, value in
-//                print("TXID: \(txid)")
-//                print("ID: \(index)")
-//                print("Value: \(value)")
-//            }
         }
 }
     

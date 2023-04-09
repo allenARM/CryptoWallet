@@ -47,15 +47,10 @@ struct HomeView: View {
         }
         .task {
             do {
-                //Create account
-//                let words = getWords()
-//                hdwallet = HDWallet(mnemonic: words.joined(separator: " "), passphrase: "")
+                //REMOVE AT REALEASE
                 let words = "today unfold raise orphan section talent rotate abuse throw entire media square"
                 hdwallet = HDWallet(mnemonic: words, passphrase: "")
                 print("HDWALLET CREATED")
-            }
-            catch{
-                print("Error in homeview")
             }
         }
     }

@@ -28,7 +28,7 @@ public func checkBTCBalance(address: String) {
                     let test = json["chain_stats"] as? [String:Any]
                     let balance = (test?["funded_txo_sum"] as! Double) - (test?["spent_txo_sum"] as! Double)
                     if (balance != nil) {
-                        let Finalbalance = balance/100000000
+                        let Finalbalance = Double(balance)/pow(10.0, 8.0)
                         btcConnect.btcBal = Finalbalance
                         if (balance == 0){
                             btcConnect.btcBal = 0.0
@@ -46,9 +46,13 @@ public func checkBTCBalance(address: String) {
        }.resume()
 }
 
+public struct btcTxHashData {
+    var txId: String!
+    var value: Int64!
+    var index: UInt!
+}
 
-
-public func getLatestTransactionHashForBTCAddress(address: String, completion: @escaping(String, Int, Int) -> ()) {
+public func getLatestTransactionHashForBTCAddress(address: String, completion: @escaping(Result<btcTxHashData, Error>) -> ()) {
     let blockstreamInfoApi = URL(string: "https://blockstream.info/api/address/\(address)/txs")!
 //    let blockstreamInfoApi = URL(string: "https://blockstream.info/testnet/api/address/muGuqWmcHpjmB2rBpdbTnCwD18wnrWCjBB/txs")!
     
@@ -74,17 +78,21 @@ public func getLatestTransactionHashForBTCAddress(address: String, completion: @
                         }
                     }
                     let value = vouts[index]["value"] as! Int
-                    completion(txid!, index, value)
+                    var btcData = btcTxHashData()
+                    btcData.txId = txid
+                    btcData.index = UInt(index)
+                    btcData.value = Int64(value)
+                    completion(.success(btcData))
                 }
               }
             } catch {
-              print("Error: NO JSON")
+                completion(.failure(error))
             }
           }
         }.resume()
 }
 
-func signBitcoinTransaction(hdwallet: HDWallet, amount:Int, toAddress:String, txid:String, txindex:Int, txvalue:Int64) -> String{
+func signBitcoinTransaction(hdwallet: HDWallet, amount:UInt64, toAddress:String, txid:String, txindex:UInt, txvalue:Int64) -> String{
     
     let utxoTxId = Data(hexString: txid)! // latest utxo for sender, "txid" field from blockbook utxo api: https://github.com/trezor/blockbook/blob/master/docs/api.md#get-utxo
     let privateKey = hdwallet.getKeyForCoin(coin: .bitcoin)
