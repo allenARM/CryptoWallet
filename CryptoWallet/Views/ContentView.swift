@@ -19,6 +19,7 @@ import BigInt
 public var hdwallet:HDWallet!
 
 let bgColor = Color(red: 19/255, green: 33/255, blue: 45/255)
+let uiColor = Color(red:30/255, green:44/255, blue:55/255)
 
 struct ContentView: View {
     

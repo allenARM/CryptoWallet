@@ -23,25 +23,87 @@ struct HomeView: View {
             ZStack{
                 bgColor
                     .ignoresSafeArea(.all)
-                
-                VStack{
-                    NavigationLink(destination: EthView())
-                    {
-                        Text("Testing Ethereum View")
+                  
+                    VStack{ //Balance information
+                            Text("Balance: " + "$100.00")
+                                .foregroundColor(Color.white)
+                                .font(.largeTitle)
+                                .padding(.bottom, 30.0)
+                                
+                            
+                            ScrollView{
+                                VStack(spacing: 5){
+                                
+                            NavigationLink(destination: EthView()) //Ethereum rectangle
+                            {
+                                ZStack(alignment: .leading){
+                                    RoundedRectangle(cornerRadius: 25.0)
+                                        .fill(uiColor)
+                                        .frame(width: .infinity, height: 80)
+                                        .padding(5)
+                                        .shadow(radius: 10)
+                                        
+                                    HStack(spacing: 60){
+                                        Image("Ethereum")
+                                            .resizable()
+                                            .frame(maxWidth: 60, maxHeight: 60, alignment: .leading)
+                                            .padding()
+                                            
+                                        Text("Ethereum")
+                                            .font(.title2)
+                                            
+                                        
+                                    }
+                                }
+                            }
+                            
+                            NavigationLink(destination: SolView()) //Solana Rectangle
+                            {
+                                ZStack(alignment: .leading){
+                                    RoundedRectangle(cornerRadius: 25.0)
+                                        .fill(uiColor)
+                                        .frame(width: .infinity, height: 80)
+                                        .padding(5)
+                                        .shadow(radius: 10)
+                                    
+                                    HStack(spacing: 60){
+                                        Image("Solana")
+                                            .resizable()
+                                            .frame(maxWidth: 60, maxHeight: 60, alignment: .leading)
+                                            .padding()
+
+                                        Text("Solana")
+                                            .font(.title2)
+                                            
+                                        
+                                    }
+                                }
+                            }
+                         
+                            
+                            NavigationLink(destination: BtcView()) //Bitcoin rectangle
+                            {
+                                ZStack(alignment: .leading){
+                                    RoundedRectangle(cornerRadius: 25.0)
+                                        .fill(uiColor)
+                                        .frame(width: .infinity, height: 80)
+                                        .padding(5)
+                                        .shadow(radius: 10)
+                                    
+                                    HStack(spacing: 60){
+                                        Image("Bitcoin")
+                                            .resizable()
+                                            .frame(maxWidth: 60, maxHeight: 60, alignment: .leading)
+                                            .padding()
+                                        
+                                        Text("Bitcoin")
+                                            .font(.title2)
+                                        
+                                    }
+                                }
+                            }
+                        }
                     }
-                    .padding()
-                    
-                    NavigationLink(destination: SolView())
-                    {
-                        Text("Testing Solana View")
-                    }
-                        .padding()
-                    
-                    NavigationLink(destination: BtcView())
-                    {
-                        Text("Testing Bitcoin View")
-                    }
-                        .padding()
                 }
             }
         }
