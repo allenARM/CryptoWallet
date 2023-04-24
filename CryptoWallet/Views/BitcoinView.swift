@@ -28,24 +28,35 @@ public struct BtcView: View{
                         .padding()
                         .background(Capsule().foregroundColor(.blue))
                 }
-                Button("Try SignBTCTransaction")
-                {
-                    try_BTCTransaction()
-                }
+//                Button("Try SignBTCTransaction")
+//                {
+//                    try_BTCTransaction()
+//                }
                 
                 NavigationLink(destination: BtcSend()) {
                     Text("Send Bitcoin")
                 }
                 
+                //QR CODE
+                Image(uiImage: createQRCode(from: hdwallet.getAddressForCoin(coin: .bitcoin)) ?? UIImage())
+                    .resizable()
+                    .scaledToFit()
+                    .padding()
+                //QR CODE END
+                
                 let coinAddress = hdwallet.getAddressForCoin(coin: .bitcoin)
-                Text(coinAddress)
-                    .font(.footnote)
-                    .padding(.all)
-                    .foregroundColor(.white)
-                    .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 20)).foregroundColor(.gray))
-                    .disabled(false)
-                Button("Copy") {
+                Button(action: {
+                    // Action to perform when the button is tapped
+                    // For example, navigate to another view or perform an action
                     UIPasteboard.general.string = coinAddress
+                    
+                    NotificationCenter.default.post(name: NSNotification.Name("AddressCopied"), object: nil)
+                }) {
+                    Text(coinAddress)
+                        .font(.footnote)
+                        .padding(.all)
+                        .foregroundColor(.white)
+                        .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 20)).foregroundColor(.gray))
                 }
             }
         }
@@ -58,6 +69,18 @@ public struct BtcView: View{
                 isLoading = false
             }
             catch {}
+        }
+        .onAppear {
+            // Listen for the "AddressCopied" notification
+            NotificationCenter.default.addObserver(forName: NSNotification.Name("AddressCopied"), object: nil, queue: nil) { _ in
+                // Display a notification that the address was copied to the clipboard
+                let notification = UNMutableNotificationContent()
+                notification.title = "Address Copied"
+                notification.body = "The address was copied to the clipboard"
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+                let request = UNNotificationRequest(identifier: "AddressCopied", content: notification, trigger: trigger)
+                UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+            }
         }
     }
     

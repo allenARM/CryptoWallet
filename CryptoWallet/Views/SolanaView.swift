@@ -30,24 +30,35 @@ public struct SolView: View{
                         .background(Capsule().foregroundColor(.blue))
                 }
                 
-                Button("Try Sol")
-                {
-                    try_SOL()
-                }
+//                Button("Try Sol")
+//                {
+//                    try_SOL()
+//                }
                 
                 NavigationLink(destination: SolSend()) {
                     Text("Send Solana")
                 }
                 
+                //QR CODE
+                Image(uiImage: createQRCode(from: hdwallet.getAddressForCoin(coin: .solana)) ?? UIImage())
+                    .resizable()
+                    .scaledToFit()
+                    .padding()
+                //QR CODE END
+                
                 let coinAddress = hdwallet.getAddressForCoin(coin: .solana)
-                Text(coinAddress)
-                    .font(.footnote)
-                    .padding(.all)
-                    .foregroundColor(.white)
-                    .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 20)).foregroundColor(.gray))
-                    .disabled(false)
-                Button("Copy") {
+                Button(action: {
+                    // Action to perform when the button is tapped
+                    // For example, navigate to another view or perform an action
                     UIPasteboard.general.string = coinAddress
+                    
+                    NotificationCenter.default.post(name: NSNotification.Name("AddressCopied"), object: nil)
+                }) {
+                    Text(coinAddress)
+                        .font(.footnote)
+                        .padding(.all)
+                        .foregroundColor(.white)
+                        .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 20)).foregroundColor(.gray))
                 }
             }
         }
@@ -71,7 +82,18 @@ public struct SolView: View{
             catch{}
             isLoading = false
         }
-        
+        .onAppear {
+            // Listen for the "AddressCopied" notification
+            NotificationCenter.default.addObserver(forName: NSNotification.Name("AddressCopied"), object: nil, queue: nil) { _ in
+                // Display a notification that the address was copied to the clipboard
+                let notification = UNMutableNotificationContent()
+                notification.title = "Address Copied"
+                notification.body = "The address was copied to the clipboard"
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+                let request = UNNotificationRequest(identifier: "AddressCopied", content: notification, trigger: trigger)
+                UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+            }
+        }
     }
     
     func try_SOL()
