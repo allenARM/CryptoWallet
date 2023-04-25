@@ -65,19 +65,19 @@ public struct SolView: View{
         .task {
             isLoading = true
             do {
-                solConnect.account = try SolanaWeb3.Account(secretKey: hdwallet.getKeyForCoin(coin: .solana).data, publicKey: hdwallet.getKeyForCoin(coin: .solana).getPublicKey(coinType: .solana).data)
-
-                if (solConnect.account.publicKey.base58 == hdwallet.getAddressForCoin(coin: .solana)) {
-                    print("Solana account restored")
-                }
-                solConnect.client.getBalance(publicKey: solConnect.account.publicKey) {result in switch result{
-                case .success(let balance):
-                    solConnect.solBal = balance
-                case .failure(let error):
-                    print(error)
-                }}
-                try await Task.sleep(nanoseconds: 2000000000)
-                checkSOLBalance()
+//                solConnect.account = try SolanaWeb3.Account(secretKey: hdwallet.getKeyForCoin(coin: .solana).data, publicKey: hdwallet.getKeyForCoin(coin: .solana).getPublicKey(coinType: .solana).data)
+//
+//                if (solConnect.account.publicKey.base58 == hdwallet.getAddressForCoin(coin: .solana)) {
+//                    print("Solana account restored")
+//                }
+//                solConnect.client.getBalance(publicKey: solConnect.account.publicKey) {result in switch result{
+//                case .success(let balance):
+//                    solConnect.solBal = balance
+//                case .failure(let error):
+//                    print(error)
+//                }}
+//                try await Task.sleep(nanoseconds: 2000000000)
+//                checkSOLBalance()
             }
             catch{}
             isLoading = false

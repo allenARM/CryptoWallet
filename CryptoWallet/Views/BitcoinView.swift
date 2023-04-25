@@ -63,9 +63,9 @@ public struct BtcView: View{
         .task {
             do {
                 isLoading = true
-                checkBTCBalance(address: hdwallet.getAddressForCoin(coin: .bitcoin))
-//                checkBTCBalance(address: "3GYjC1igp6ySPoUJQTXNri75FR5MrVmuiC")
-                try await Task.sleep(nanoseconds: 2000000000)
+//                checkBTCBalance(address: hdwallet.getAddressForCoin(coin: .bitcoin))
+////                checkBTCBalance(address: "3GYjC1igp6ySPoUJQTXNri75FR5MrVmuiC")
+//                try await Task.sleep(nanoseconds: 2000000000)
                 isLoading = false
             }
             catch {}

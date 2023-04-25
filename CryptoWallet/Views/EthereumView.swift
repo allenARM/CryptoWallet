@@ -66,11 +66,11 @@ public struct EthView: View
             .task {
                 isLoading = true
                 do {
-                    ethConnect.blockNum = try await ethConnect.client.eth_blockNumber()
-                    ethConnect.ethBal = BigUInt(try await ethConnect.client.eth_getBalance(address: web3.EthereumAddress(stringLiteral: hdwallet.getAddressForCoin(coin: .ethereum)), block: web3.EthereumBlock(rawValue: ethConnect.blockNum)))
-                    await checkETHBalance(for: hdwallet.getAddressForCoin(coin: .ethereum))
-                    ethConnect.gasPrice = BigUInt(try await ethConnect.client.eth_gasPrice())
-                    getEthereumGasPrice()
+//                    ethConnect.blockNum = try await ethConnect.client.eth_blockNumber()
+//                    ethConnect.ethBal = BigUInt(try await ethConnect.client.eth_getBalance(address: web3.EthereumAddress(stringLiteral: hdwallet.getAddressForCoin(coin: .ethereum)), block: web3.EthereumBlock(rawValue: ethConnect.blockNum)))
+//                    await checkETHBalance(for: hdwallet.getAddressForCoin(coin: .ethereum))
+//                    ethConnect.gasPrice = BigUInt(try await ethConnect.client.eth_gasPrice())
+//                    getEthereumGasPrice()
                 }
                 catch{}
                 isLoading = false
