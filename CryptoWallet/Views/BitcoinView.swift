@@ -36,6 +36,11 @@ public struct BtcView: View{
                 NavigationLink(destination: BtcSend()) {
                     Text("Send Bitcoin")
                 }
+                .font(.title3)
+                .foregroundColor(.white)
+//                .background(Color(.systemBlue))
+                .padding()
+                .background(Capsule().foregroundColor(.gray))
                 
                 //QR CODE
                 Image(uiImage: createQRCode(from: hdwallet.getAddressForCoin(coin: .bitcoin)) ?? UIImage())
@@ -118,16 +123,21 @@ struct BtcSend: View {
                 TextField("Amount", text: $amount)
                 .padding()
                 .foregroundColor(.blue)
+                .background(Color(.white))
                 
                 TextField("Recipient Address", text: $recipientAddress)
                 .padding()
                 .foregroundColor(.blue)
+                .background(Color(.white))
+                
                 Button("Send")
                 {
                     getLatestTransactionHashForBTCAddress(address: btcConnect.btcAddress) { result in switch result {
                     case .success(let btcData):
-                        
-                        let rawBTCtransaction = signBitcoinTransaction(hdwallet: hdwallet, amount: (UInt64(amount)! * 100000000), toAddress: recipientAddress, txid: btcData.txId, txindex: btcData.index, txvalue: btcData.value)
+                        var dAmount = Decimal(string: amount) ?? 0
+                        dAmount = dAmount * 100000000
+                        var newDAmount = UInt64(dAmount.description)!
+                        let rawBTCtransaction = signBitcoinTransaction(hdwallet: hdwallet, amount: newDAmount, toAddress: recipientAddress, txid: btcData.txId, txindex: btcData.index, txvalue: btcData.value)
                         postBitcoinTransaction(rawTx: rawBTCtransaction) { result1 in
                             switch result1 {
                             case .success(let transactionID):
@@ -142,7 +152,8 @@ struct BtcSend: View {
                     confirmBtc()
                 }
                 .padding()
-                .foregroundColor(.blue)
+                .foregroundColor(.white)
+                .background(Color(.systemBlue))
             }
         }
         .fullScreenCover(isPresented: $isShowingConfirmView){

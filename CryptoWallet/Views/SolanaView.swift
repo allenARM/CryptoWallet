@@ -38,6 +38,11 @@ public struct SolView: View{
                 NavigationLink(destination: SolSend()) {
                     Text("Send Solana")
                 }
+                .font(.title3)
+                .foregroundColor(.white)
+//                .background(Color(.systemBlue))
+                .padding()
+                .background(Capsule().foregroundColor(.gray))
                 
                 //QR CODE
                 Image(uiImage: createQRCode(from: hdwallet.getAddressForCoin(coin: .solana)) ?? UIImage())
@@ -122,20 +127,24 @@ struct SolSend: View {
                 TextField("Amount", text: $amount)
                 .padding()
                 .foregroundColor(.blue)
+                .background(Color(.white))
                 
-                Text("Double var: \((Double(amount) ?? 0) * pow(10, 9))")
-                Text("Double var: \(UInt64((Double(amount) ?? 0) * pow(10, 9)))")
+//                Text("Double var: \((Double(amount) ?? 0) * pow(10, 9))")
+//                Text("Double var: \(UInt64((Double(amount) ?? 0) * pow(10, 9)))")
                 
                 TextField("Recipient Address", text: $recipientAddress)
                 .padding()
                 .foregroundColor(.blue)
+                .background(Color(.white))
+                
                 Button("Send")
                 {
                     sendSolTransaction(toAddress: recipientAddress, Amount: UInt64((Double(amount) ?? 0) * pow(10, 9)))
                     confirmSol()
                 }
                 .padding()
-                .foregroundColor(.blue)
+                .foregroundColor(.white)
+                .background(Color(.systemBlue))
             }
         }
         .fullScreenCover(isPresented: $isShowingConfirmView){

@@ -38,6 +38,11 @@ public struct EthView: View
                     NavigationLink(destination: EthSend()) {
                         Text("Send Ethereum")
                     }
+                    .font(.title3)
+                    .foregroundColor(.white)
+//                    .background(Color(.systemBlue))
+                    .padding()
+                    .background(Capsule().foregroundColor(.gray))
                     
                     //QR CODE
                     Image(uiImage: createQRCode(from: hdwallet.getAddressForCoin(coin: .ethereum)) ?? UIImage())
@@ -115,12 +120,15 @@ struct EthSend: View {
                 }
                 .padding()
                 .foregroundColor(.blue)
+                .background(Color(.white))
                 
                 TextField("Recipient Address", text: $recipientAddressETH) {
                     ethT.toAddress = String(recipientAddressETH)
                 }
                 .padding()
                 .foregroundColor(.blue)
+                .background(Color(.white))
+                
                 Button("Send")
                 {
                     let result = Decimal(string: amount)! * Decimal(pow(10,18))
@@ -129,7 +137,8 @@ struct EthSend: View {
                     confirmEth()
                 }
                 .padding()
-                .foregroundColor(.blue)
+                .foregroundColor(.white)
+                .background(Color(.systemBlue))
             }
         }
         .fullScreenCover(isPresented: $isShowingConfirmView){
