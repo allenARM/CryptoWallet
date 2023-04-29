@@ -95,10 +95,8 @@ public struct EthView: View
 }
 
 struct EthSend: View {
-    @State var ethT = EthTransaction()
-    
     @State private var amount: String = ""
-    @State private var recipientAddress: String = ""
+    @State private var recipientAddressETH: String = ""
     @State private var isShowingConfirmView = false
     
     var body: some View{
@@ -112,18 +110,22 @@ struct EthSend: View {
                     .padding()
                     .background(Rectangle().foregroundColor(.blue))
                 TextField("Amount", text: $amount) {
-                    ethT.amount = BigUInt(stringLiteral: amount) * BigUInt(10).power(18)
+                    let result = Decimal(string: amount) ?? 0 * Decimal(pow(10,18))
+                    ethT.amount = BigUInt(result.description)
                 }
                 .padding()
                 .foregroundColor(.blue)
-                TextField("Recipient Address", text: $recipientAddress) {
-                    ethT.toAddress = recipientAddress
+                
+                TextField("Recipient Address", text: $recipientAddressETH) {
+                    ethT.toAddress = String(recipientAddressETH)
                 }
                 .padding()
                 .foregroundColor(.blue)
                 Button("Send")
                 {
-                    postEthereumTransaction(ethTransaction: ethT)
+                    let result = Decimal(string: amount)! * Decimal(pow(10,18))
+                    let final = BigUInt(result.description)
+                    postEthereumTransaction(toAddress: recipientAddressETH, amount: final ?? 0)
                     confirmEth()
                 }
                 .padding()
@@ -136,7 +138,7 @@ struct EthSend: View {
         // run asynchronous code here
         .task {
             ethT.gasPrice = ethConnect.gasPrice
-            ethT.gasLimit = ethT.gasPrice + 15;
+            ethT.gasLimit = 25000;
         }
     }
     //maybe create ENUM type for different confirm views

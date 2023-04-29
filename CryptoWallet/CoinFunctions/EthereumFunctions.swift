@@ -31,6 +31,8 @@ public struct EthTransaction {
     var gasLimit: BigUInt!
 }
 
+public var ethT = EthTransaction()
+
 public func checkETHBalance(for address: String) async {
     let doubleBal = Double(ethConnect.ethBal)/pow(10.0, 18.0)
     ethConnect.ethBalNormilized = doubleBal
@@ -44,17 +46,27 @@ func getEthereumGasPrice() {
 func prepareTransaction(amount:BigUInt, toAddress:String) -> EthTransaction {
     var ethT = EthTransaction()
     ethT.gasPrice = ethConnect.gasPrice
-    ethT.gasLimit = BigUInt(Double(ethT.gasPrice) * 1.5)
+    ethT.gasLimit = 21000
     ethT.amount = amount * BigUInt(10).power(18)
     ethT.toAddress = toAddress
     return ethT
 }
 
-func postEthereumTransaction(ethTransaction: EthTransaction) {
+func postEthereumTransaction(toAddress: String, amount: BigUInt) {
     do{
         let account = try web3.EthereumAccount(keyStorage: ethConnect.ethKeyLocalStorage)
         
-        let testTransaction = web3.EthereumTransaction(from: ethConnect.ethAddress, to: web3.EthereumAddress(stringLiteral: ethTransaction.toAddress), value: ethTransaction.amount, data: try ethConnect.ethKeyLocalStorage.loadPrivateKey(), gasPrice: ethTransaction.gasPrice, gasLimit: ethTransaction.gasLimit)
+        ethT.toAddress = toAddress
+        ethT.amount = amount
+        print("-----------------------")
+//        print(ethTransaction.toAddress!)
+        print(ethT.toAddress!)
+        print(ethT.amount!)
+        print(ethT.gasPrice!)
+        print(ethT.gasLimit!)
+        print("-----------------------")
+        
+        let testTransaction = web3.EthereumTransaction(from: ethConnect.ethAddress, to: web3.EthereumAddress(stringLiteral: ethT.toAddress), value: ethT.amount, data: try ethConnect.ethKeyLocalStorage.loadPrivateKey(), gasPrice: ethT.gasPrice, gasLimit: ethT.gasLimit)
         
         ethConnect.client.eth_sendRawTransaction(testTransaction, withAccount: account) { result in switch result {
         case .success(let respond):
