@@ -59,14 +59,16 @@ func postEthereumTransaction(toAddress: String, amount: BigUInt) {
         ethT.toAddress = toAddress
         ethT.amount = amount
         print("-----------------------")
-//        print(ethTransaction.toAddress!)
         print(ethT.toAddress!)
         print(ethT.amount!)
         print(ethT.gasPrice!)
         print(ethT.gasLimit!)
+        print(account.address.asString())
         print("-----------------------")
         
-        let testTransaction = web3.EthereumTransaction(from: ethConnect.ethAddress, to: web3.EthereumAddress(stringLiteral: ethT.toAddress), value: ethT.amount, data: try ethConnect.ethKeyLocalStorage.loadPrivateKey(), gasPrice: ethT.gasPrice, gasLimit: ethT.gasLimit)
+        ethT.gasPrice = 35000000000
+        
+        let testTransaction = web3.EthereumTransaction(from: ethConnect.ethAddress, to: web3.EthereumAddress(stringLiteral: ethT.toAddress), value: ethT.amount!, data: try ethConnect.ethKeyLocalStorage.loadPrivateKey(), gasPrice: ethT.gasPrice!, gasLimit: ethT.gasLimit!)
         
         ethConnect.client.eth_sendRawTransaction(testTransaction, withAccount: account) { result in switch result {
         case .success(let respond):

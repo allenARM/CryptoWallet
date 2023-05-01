@@ -149,6 +149,7 @@ struct HomeView: View {
                 //Getting ethereum balance
                 ethConnect.blockNum = try await ethConnect.client.eth_blockNumber()
                 ethConnect.ethBal = BigUInt(try await ethConnect.client.eth_getBalance(address: web3.EthereumAddress(stringLiteral: hdwallet.getAddressForCoin(coin: .ethereum)), block: web3.EthereumBlock(rawValue: ethConnect.blockNum)))
+                try ethConnect.ethKeyLocalStorage.storePrivateKey(key: hdwallet.getKeyForCoin(coin: .ethereum).data)
                 await checkETHBalance(for: hdwallet.getAddressForCoin(coin: .ethereum))
                 ethConnect.gasPrice = BigUInt(try await ethConnect.client.eth_gasPrice())
                 getEthereumGasPrice()

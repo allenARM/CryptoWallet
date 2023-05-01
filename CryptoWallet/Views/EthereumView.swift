@@ -147,7 +147,7 @@ struct EthSend: View {
         // run asynchronous code here
         .task {
             ethT.gasPrice = ethConnect.gasPrice
-            ethT.gasLimit = 25000;
+            ethT.gasLimit = 21000;
         }
     }
     //maybe create ENUM type for different confirm views
