@@ -58,18 +58,18 @@ struct ContentView: View {
                             .cornerRadius(8)
                             .padding(.horizontal, 25)
                     }
-                    
-                    NavigationLink(destination: HomeView())
-                    {
-                        Text("Go to homeview (Login Test)")
-                        
-                    }
-                    .padding(.bottom, 25.0)
-                    .onSubmit {
-//                        let words = "today unfold raise orphan section talent rotate abuse throw entire media square"
-                        let words = "section pair clay machine garbage rocket rubber pitch mom assist flavor obtain"
-                        hdwallet = HDWallet(mnemonic: words, passphrase: "")
-                    }
+                    //TEST BUTTON
+//                    NavigationLink(destination: HomeView())
+//                    {
+//                        Text("Go to homeview (Login Test)")
+//
+//                    }
+//                    .padding(.bottom, 25.0)
+//                    .onSubmit {
+////                        let words = "today unfold raise orphan section talent rotate abuse throw entire media square"
+//                        let words = "section pair clay machine garbage rocket rubber pitch mom assist flavor obtain"
+//                        hdwallet = HDWallet(mnemonic: words, passphrase: "")
+//                    }
                 }
               
                 .task {

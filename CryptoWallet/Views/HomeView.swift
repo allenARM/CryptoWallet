@@ -32,10 +32,10 @@ struct HomeView: View {
                     .ignoresSafeArea(.all)
                   
                 VStack{ //Balance information
-                    Text("Balance: " + "$100.00")
-                        .foregroundColor(Color.white)
-                        .font(.largeTitle)
-                        .padding(.bottom, 30.0)
+//                    Text("Balance: " + "$100.00")
+//                        .foregroundColor(Color.white)
+//                        .font(.largeTitle)
+//                        .padding(.bottom, 30.0)
                     
                     
                     ScrollView{
