@@ -12,7 +12,8 @@ import BigInt
 import web3
 
 public struct EthereumConnect {
-    let client = EthereumHttpClient(url: URL(string: "https://mainnet.infura.io/v3/a30677d78d3d45e19fd10d4a79a591c2")!)
+//    let client = EthereumHttpClient(url: URL(string: "https://mainnet.infura.io/v3/a30677d78d3d45e19fd10d4a79a591c2")!)
+    let client = EthereumHttpClient(url: URL(string: "https://goerli.infura.io/v3/a30677d78d3d45e19fd10d4a79a591c2")!)
     var blockNum: Int!
     var ethBal: BigUInt!
     var ethBalNormilized: Double!
@@ -46,7 +47,7 @@ func getEthereumGasPrice() {
 func prepareTransaction(amount:BigUInt, toAddress:String) -> EthTransaction {
     var ethT = EthTransaction()
     ethT.gasPrice = ethConnect.gasPrice
-    ethT.gasLimit = 21000
+    ethT.gasLimit = 25000
     ethT.amount = amount * BigUInt(10).power(18)
     ethT.toAddress = toAddress
     return ethT
@@ -58,6 +59,7 @@ func postEthereumTransaction(toAddress: String, amount: BigUInt) {
         
         ethT.toAddress = toAddress
         ethT.amount = amount
+        ethT.gasLimit = 25000
         print("-----------------------")
         print(ethT.toAddress!)
         print(ethT.amount!)
@@ -65,9 +67,7 @@ func postEthereumTransaction(toAddress: String, amount: BigUInt) {
         print(ethT.gasLimit!)
         print(account.address.asString())
         print("-----------------------")
-        
-        ethT.gasPrice = 35000000000
-        
+                
         let testTransaction = web3.EthereumTransaction(from: ethConnect.ethAddress, to: web3.EthereumAddress(stringLiteral: ethT.toAddress), value: ethT.amount!, data: try ethConnect.ethKeyLocalStorage.loadPrivateKey(), gasPrice: ethT.gasPrice!, gasLimit: ethT.gasLimit!)
         
         ethConnect.client.eth_sendRawTransaction(testTransaction, withAccount: account) { result in switch result {

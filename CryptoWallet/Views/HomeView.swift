@@ -118,10 +118,6 @@ struct HomeView: View {
         .task {
             do {
                 isLoading = true
-                //REMOVE AT REALEASE
-//                let words = "today unfold raise orphan section talent rotate abuse throw entire media square"
-                let words = "section pair clay machine garbage rocket rubber pitch mom assist flavor obtain"
-                hdwallet = HDWallet(mnemonic: words, passphrase: "")
                 print("HDWALLET CREATED")
                 
                 //Getting bitcoin balance
