@@ -139,7 +139,7 @@ struct SolSend: View {
                 
                 Button("Send")
                 {
-                    sendSolTransaction(toAddress: recipientAddress, Amount: UInt64((Double(amount) ?? 0) * pow(10, 9)))
+                    sendSolTransaction(toAddress: recipientAddress, Amount: UInt64((Decimal(string: amount)! * Decimal(pow(10,9))).description)!)
                     confirmSol()
                 }
                 .padding()
