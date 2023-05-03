@@ -110,6 +110,9 @@ struct ContentView: View {
                             words.append(TextField12Words)
                             TextField12Words = ""
                         }
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color(.systemBlue))
                     } else{
                         Button("Login")
                         {
@@ -120,6 +123,9 @@ struct ContentView: View {
 
                             self.isShowingHomeView = true
                         }
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color(.systemBlue))
                     }
                 }
                 .fullScreenCover(isPresented: $isShowingHomeView){
