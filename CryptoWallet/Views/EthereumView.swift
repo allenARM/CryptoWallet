@@ -16,55 +16,53 @@ public struct EthView: View
     
     public var body: some View
     {
-        NavigationView {
-            ZStack{
-                bgColor
-                    .ignoresSafeArea(.all)
-                VStack
-                {
-                    if (isLoading == true) {
-                        ProgressView()
-                    }
-                    else if (isLoading == false) {
-                        Text("Balance: " + String(ethConnect.ethBalNormilized!))
-                            .font(.title3)
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Capsule().foregroundColor(.blue))
-                    }
+        ZStack{
+            bgColor
+                .ignoresSafeArea(.all)
+            VStack
+            {
+                if (isLoading == true) {
+                    ProgressView()
+                }
+                else if (isLoading == false) {
+                    Text("Balance: " + String(ethConnect.ethBalNormilized!))
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Capsule().foregroundColor(.gray))
+                }
 //                    Button("Try ETH") { try_ETH() }
 //                        .padding()
-                    
-                    NavigationLink(destination: EthSend()) {
-                        Text("Send Ethereum")
-                    }
-                    .font(.title3)
-                    .foregroundColor(.white)
+                
+                NavigationLink(destination: EthSend()) {
+                    Text("Send Ethereum")
+                }
+                .font(.title3)
+                .foregroundColor(.white)
 //                    .background(Color(.systemBlue))
+                .padding()
+                .background(Capsule().foregroundColor(.blue))
+                
+                //QR CODE
+                Image(uiImage: createQRCode(from: hdwallet.getAddressForCoin(coin: .ethereum)) ?? UIImage())
+                    .resizable()
+                    .scaledToFit()
                     .padding()
-                    .background(Capsule().foregroundColor(.gray))
+                //QR CODE END
+                
+                let coinAddress = hdwallet.getAddressForCoin(coin: .ethereum)
+                Button(action: {
+                    // Action to perform when the button is tapped
+                    // For example, navigate to another view or perform an action
+                    UIPasteboard.general.string = coinAddress
                     
-                    //QR CODE
-                    Image(uiImage: createQRCode(from: hdwallet.getAddressForCoin(coin: .ethereum)) ?? UIImage())
-                        .resizable()
-                        .scaledToFit()
-                        .padding()
-                    //QR CODE END
-                    
-                    let coinAddress = hdwallet.getAddressForCoin(coin: .ethereum)
-                    Button(action: {
-                        // Action to perform when the button is tapped
-                        // For example, navigate to another view or perform an action
-                        UIPasteboard.general.string = coinAddress
-                        
-                        NotificationCenter.default.post(name: NSNotification.Name("AddressCopied"), object: nil)
-                    }) {
-                        Text(coinAddress)
-                            .font(.footnote)
-                            .padding(.all)
-                            .foregroundColor(.white)
-                            .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 20)).foregroundColor(.gray))
-                    }
+                    NotificationCenter.default.post(name: NSNotification.Name("AddressCopied"), object: nil)
+                }) {
+                    Text(coinAddress)
+                        .font(.footnote)
+                        .padding(.all)
+                        .foregroundColor(.white)
+                        .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 20)).foregroundColor(.gray))
                 }
             }
         }

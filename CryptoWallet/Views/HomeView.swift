@@ -60,6 +60,10 @@ struct HomeView: View {
                                             .font(.title2)
                                         
                                         
+                                        Text(String(format: "%.4f", ethConnect.ethBalNormilized))
+                                            .font(.title2)
+                                            .padding(.trailing)
+                                        
                                     }
                                 }
                             }
@@ -82,7 +86,10 @@ struct HomeView: View {
                                         Text("Solana")
                                             .font(.title2)
                                         
-                                        
+                                        Text(String(format: "%.4f", solConnect.solBalNormilized))
+                                            .font(.title2)
+                                            .padding(.leading)
+
                                     }
                                 }
                             }
@@ -106,6 +113,10 @@ struct HomeView: View {
                                         Text("Bitcoin")
                                             .font(.title2)
                                         
+                                        Text(String(format: "%.4f", btcConnect.btcBal))
+                                            .font(.title2)
+                                            .padding(.leading)
+
                                     }
                                 }
                             }

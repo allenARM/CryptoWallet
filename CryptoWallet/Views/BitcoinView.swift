@@ -26,7 +26,7 @@ public struct BtcView: View{
                         .font(.title3)
                         .foregroundColor(.white)
                         .padding()
-                        .background(Capsule().foregroundColor(.blue))
+                        .background(Capsule().foregroundColor(.gray))
                 }
 //                Button("Try SignBTCTransaction")
 //                {
@@ -40,7 +40,7 @@ public struct BtcView: View{
                 .foregroundColor(.white)
 //                .background(Color(.systemBlue))
                 .padding()
-                .background(Capsule().foregroundColor(.gray))
+                .background(Capsule().foregroundColor(.blue))
                 
                 //QR CODE
                 Image(uiImage: createQRCode(from: hdwallet.getAddressForCoin(coin: .bitcoin)) ?? UIImage())

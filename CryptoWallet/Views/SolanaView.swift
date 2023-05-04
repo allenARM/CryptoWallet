@@ -27,7 +27,7 @@ public struct SolView: View{
                         .font(.title3)
                         .foregroundColor(.white)
                         .padding()
-                        .background(Capsule().foregroundColor(.blue))
+                        .background(Capsule().foregroundColor(.gray))
                 }
                 
 //                Button("Try Sol")
@@ -42,7 +42,7 @@ public struct SolView: View{
                 .foregroundColor(.white)
 //                .background(Color(.systemBlue))
                 .padding()
-                .background(Capsule().foregroundColor(.gray))
+                .background(Capsule().foregroundColor(.blue))
                 
                 //QR CODE
                 Image(uiImage: createQRCode(from: hdwallet.getAddressForCoin(coin: .solana)) ?? UIImage())

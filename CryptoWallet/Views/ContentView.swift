@@ -58,7 +58,7 @@ struct ContentView: View {
                             .cornerRadius(8)
                             .padding(.horizontal, 25)
                     }
-                    //TEST BUTTON
+//                    TEST BUTTON
 //                    NavigationLink(destination: HomeView())
 //                    {
 //                        Text("Go to homeview (Login Test)")
@@ -66,9 +66,9 @@ struct ContentView: View {
 //                    }
 //                    .padding(.bottom, 25.0)
 //                    .onSubmit {
-////                        let words = "today unfold raise orphan section talent rotate abuse throw entire media square"
-//                        let words = "section pair clay machine garbage rocket rubber pitch mom assist flavor obtain"
+//                        let words = "today unfold raise orphan section talent rotate abuse throw entire media square"
 //                        hdwallet = HDWallet(mnemonic: words, passphrase: "")
+//                        print(hdwallet.getAddressForCoin(coin: .bitcoin))
 //                    }
                 }
               
