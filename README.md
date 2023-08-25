@@ -9,9 +9,15 @@ Thorough testing has been conducted to ensure flawless transaction execution and
 
 Crafted with a focus on simplicity, this project boasts a minimalist yet functional design. Our commitment to keeping things straightforward guarantees a user-friendly interface for all. Moreover, your security remains our top priority. Rest assured that all your sensitive information is exclusively stored on your device, enhancing the overall safety of your crypto transactions.
 
-<img src="images/StartScreen.png" alt="Welcome Screen" width="200">
-<img src="images/SecretPhrase.png" alt="Generating New Wallet" width="200">
-<img src="images/LoginScreen.png" alt="Login Into Your New Wallet" width="200">
-<img src="images/HomeScreen.png" alt="Home Screen" width="200">
-<img src="images/CoinScreen.png" alt="Coin Information" width="200">
-<img src="images/SendScreen.png" alt="Make a Transaction" width="200">
+<div style="display: flex; gap: 20px;">
+  <img src="images/StartScreen.png" alt="Welcome Screen" width="200">
+  <img src="images/SecretPhrase.png" alt="Generating New Wallet" width="200">
+  <img src="images/LoginScreen.png" alt="Login Into Your New Wallet" width="200">
+</div>
+
+<div style="display: flex; gap: 20px;">
+  <img src="images/HomeScreen.png" alt="Home Screen" width="200">
+  <img src="images/CoinScreen.png" alt="Coin Information" width="200">
+  <img src="images/SendScreen.png" alt="Make a Transaction" width="200">
+</div>
+
