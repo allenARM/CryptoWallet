@@ -59,7 +59,7 @@ func postEthereumTransaction(toAddress: String, amount: BigUInt) {
         
         ethT.toAddress = toAddress
         ethT.amount = amount
-        ethT.gasLimit = 25000
+        ethT.gasLimit = 35000
         print("-----------------------")
         print(ethT.toAddress!)
         print(ethT.amount!)
